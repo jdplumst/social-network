@@ -11,7 +11,55 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(cuid())
-  email    String @unique
+  id       String    @id @default(cuid())
+  email    String    @unique
   password String
+  Profile  Profile[]
+}
+
+model Profile {
+  id               String    @id @default(cuid())
+  userId           String
+  firstName        String
+  lastName         String
+  location         String
+  occupation       String
+  gender           String
+  birthday         DateTime
+  profilePicture   String
+  profileCompleted String
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Post             Post[]
+  Comment          Comment[]
+  Like             Like[]
+}
+
+model Post {
+  id          String    @id @default(cuid())
+  profileId   String
+  description String
+  createDate  DateTime
+  modifyDate  DateTime
+  profile     Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  Comment     Comment[]
+  Like        Like[]
+}
+
+model Comment {
+  id          String   @id @default(cuid())
+  profileId   String
+  postId      String
+  description String
+  createDate  DateTime
+  modifyDate  DateTime
+  profile     Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model Like {
+  id        String  @id @default(cuid())
+  profileId String
+  postId    String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  post      Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
