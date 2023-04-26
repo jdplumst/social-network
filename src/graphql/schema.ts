@@ -8,6 +8,11 @@ export const typeDefs = `#graphql
     profile: Profile
   }
 
+  type Auth {
+    id: String
+    email: String
+  }
+
   type Profile {
     id: String
     userId: String
@@ -50,5 +55,9 @@ export const typeDefs = `#graphql
   type Query {
     user(id: String): User
     users: [User]
+  }
+
+  type Mutation {
+    signUp(email: String!, password: String!): Auth
   }
 `;
