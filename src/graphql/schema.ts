@@ -5,11 +5,12 @@ export const typeDefs = `#graphql
     id: String
     email: String
     password: String
+    profile: Profile
   }
 
   type Profile {
     id: String
-    user: User
+    userId: String
     firstName: String
     lastName: String
     location: String
@@ -47,6 +48,7 @@ export const typeDefs = `#graphql
   }
 
   type Query {
-    hello: String
+    user(id: String): User
+    users: [User]
   }
 `;
