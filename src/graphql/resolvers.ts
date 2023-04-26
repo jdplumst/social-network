@@ -8,22 +8,7 @@ import { serialize } from "cookie";
 export const resolvers = {
   Query: {
     user: async (parent: any, args: any, context: Context) => {
-      const { token } = context.req.cookies;
-      if (!token) {
-        throw new Error("Not authorized to make this request.");
-      }
-      try {
-        const id = jsonwebtoken.verify(
-          token,
-          process.env.TOKEN_SECRET as string
-        );
-        const user = await context.prisma.user.findUnique({
-          where: { id: id.toString() }
-        });
-        if (user?.id !== id) {
-          throw new Error("Not authorized to make this request.");
-        }
-      } catch (error) {
+      if (!context.user) {
         throw new Error("Not authorized to make this request.");
       }
       return await context.prisma.user.findUnique({ where: { id: args.id } });
