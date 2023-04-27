@@ -7,15 +7,6 @@ import { serialize } from "cookie";
 
 export const resolvers = {
   Query: {
-    user: async (parent: any, args: any, context: Context) => {
-      if (!context.user) {
-        throw new Error("Not authorized to make this request.");
-      }
-      return await context.prisma.user.findUnique({ where: { id: args.id } });
-    },
-    users: async (parent: any, args: any, context: Context) => {
-      return await context.prisma.user.findMany();
-    },
     getUserProfile: async (parent: any, args: String, context: Context) => {
       if (!context.user) {
         throw new Error("Not authorized to make this request.");
@@ -25,13 +16,13 @@ export const resolvers = {
       });
     }
   },
-  User: {
-    profile: async (parent: any, args: any, context: Context) => {
-      return await context.prisma.profile.findUnique({
-        where: { userId: parent.id }
-      });
-    }
-  },
+  // User: {
+  //   profile: async (parent: any, args: any, context: Context) => {
+  //     return await context.prisma.profile.findUnique({
+  //       where: { userId: parent.id }
+  //     });
+  //   }
+  // },
   Mutation: {
     signUp: async (parent: any, args: User, context: Context) => {
       if (!args.email || !args.password) {
