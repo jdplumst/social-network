@@ -55,6 +55,7 @@ export const typeDefs = `#graphql
   type Query {
     user(id: String): User
     users: [User]
+    getUserProfile(userId: String): Profile
   }
 
   type Mutation {
