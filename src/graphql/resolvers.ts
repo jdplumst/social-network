@@ -108,7 +108,7 @@ export const resolvers = {
         !args.gender ||
         !args.birthday
       ) {
-        throw Error("All fields must be filled");
+        throw Error("All fields must be filled.");
       }
       const exists = await context.prisma.profile.findFirst({
         where: { userId: context.user.id }
@@ -127,6 +127,24 @@ export const resolvers = {
           profileCompleted: false
         }
       });
+      return profile;
+    },
+    completeProfile: async (parent: any, args: Profile, context: Context) => {
+      if (!context.user) {
+        throw Error("Not authorized to make this request.");
+      }
+      if (!args.profilePicture) {
+        throw Error("Must select a profile picture.");
+      }
+      const exists = await context.prisma.profile.findFirst({
+        where: { userId: context.user.id }
+      });
+      if (!exists) throw Error("Profile does not exist.");
+      const profile = await context.prisma.profile.update({
+        where: { userId: context.user.id },
+        data: { profilePicture: args.profilePicture, profileCompleted: true }
+      });
+      return profile;
     }
   }
 };

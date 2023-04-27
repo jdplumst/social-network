@@ -58,14 +58,12 @@ export const typeDefs = `#graphql
   type Mutation {
     signUp(email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    createProfile(id: String, 
-                  firstName: String, 
+    createProfile(firstName: String, 
                   lastName: String, 
                   location: String, 
                   occupation: String,
                   gender: String,
-                  birthday: Date,
-                  profilePicture: String,
-                  profileCompleted: Boolean): Profile,
+                  birthday: Date): Profile,
+    completeProfile(profilePicture: String): Profile
   }
 `;
