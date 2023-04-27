@@ -1,5 +1,5 @@
 import { Context } from "./context";
-import { User } from "@prisma/client";
+import { Profile, User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import validator from "validator";
 import jsonwebtoken from "jsonwebtoken";
@@ -7,9 +7,9 @@ import { serialize } from "cookie";
 
 export const resolvers = {
   Query: {
-    getUserProfile: async (parent: any, args: String, context: Context) => {
+    getUserProfile: async (parent: any, args: any, context: Context) => {
       if (!context.user) {
-        throw new Error("Not authorized to make this request.");
+        throw Error("Not authorized to make this request.");
       }
       return await context.prisma.profile.findUnique({
         where: { userId: context.user.id }
@@ -95,6 +95,38 @@ export const resolvers = {
         })
       ]);
       return { email: user.email, id: user.id };
+    },
+    createProfile: async (parent: any, args: Profile, context: Context) => {
+      if (!context.user) {
+        throw Error("Not authorized to make this request.");
+      }
+      if (
+        !args.firstName ||
+        !args.lastName ||
+        !args.location ||
+        !args.occupation ||
+        !args.gender ||
+        !args.birthday
+      ) {
+        throw Error("All fields must be filled");
+      }
+      const exists = await context.prisma.profile.findFirst({
+        where: { userId: context.user.id }
+      });
+      if (exists) throw Error("Profile already exists.");
+      const profile = await context.prisma.profile.create({
+        data: {
+          userId: context.user.id,
+          firstName: args.firstName,
+          lastName: args.lastName,
+          location: args.location,
+          occupation: args.occupation,
+          gender: args.occupation,
+          birthday: args.birthday,
+          profilePicture: "",
+          profileCompleted: false
+        }
+      });
     }
   }
 };

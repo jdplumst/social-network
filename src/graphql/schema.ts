@@ -15,7 +15,6 @@ export const typeDefs = `#graphql
 
   type Profile {
     id: String
-    userId: String
     firstName: String
     lastName: String
     location: String
@@ -53,11 +52,20 @@ export const typeDefs = `#graphql
   }
 
   type Query {
-    getUserProfile(userId: String): Profile
+    getUserProfile: Profile
   }
 
   type Mutation {
     signUp(email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
+    createProfile(id: String, 
+                  firstName: String, 
+                  lastName: String, 
+                  location: String, 
+                  occupation: String,
+                  gender: String,
+                  birthday: Date,
+                  profilePicture: String,
+                  profileCompleted: Boolean): Profile,
   }
 `;

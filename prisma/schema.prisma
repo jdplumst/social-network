@@ -27,7 +27,7 @@ model Profile {
   gender           String
   birthday         DateTime
   profilePicture   String
-  profileCompleted String
+  profileCompleted Boolean
   user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   Post             Post[]
   Comment          Comment[]
