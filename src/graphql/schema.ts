@@ -64,6 +64,13 @@ export const typeDefs = `#graphql
                   occupation: String,
                   gender: String,
                   birthday: Date): Profile,
-    completeProfile(profilePicture: String): Profile
+    completeProfile(profilePicture: String): Profile,
+    updateProfile(firstName: String, 
+                  lastName: String, 
+                  location: String, 
+                  occupation: String,
+                  gender: String,
+                  birthday: Date,
+                  profilePicture: String): Profile,
   }
 `;

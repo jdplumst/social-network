@@ -66,6 +66,7 @@ export const resolvers = {
         throw Error("Something went wrong.");
       }
     },
+
     login: async (parent: any, args: User, context: Context) => {
       if (!args.email || !args.password) {
         throw Error("All fields must be filled");
@@ -96,6 +97,7 @@ export const resolvers = {
       ]);
       return { email: user.email, id: user.id };
     },
+
     createProfile: async (parent: any, args: Profile, context: Context) => {
       if (!context.user) {
         throw Error("Not authorized to make this request.");
@@ -121,7 +123,7 @@ export const resolvers = {
           lastName: args.lastName,
           location: args.location,
           occupation: args.occupation,
-          gender: args.occupation,
+          gender: args.gender,
           birthday: args.birthday,
           profilePicture: "",
           profileCompleted: false
@@ -129,6 +131,7 @@ export const resolvers = {
       });
       return profile;
     },
+
     completeProfile: async (parent: any, args: Profile, context: Context) => {
       if (!context.user) {
         throw Error("Not authorized to make this request.");
@@ -143,6 +146,37 @@ export const resolvers = {
       const profile = await context.prisma.profile.update({
         where: { userId: context.user.id },
         data: { profilePicture: args.profilePicture, profileCompleted: true }
+      });
+      return profile;
+    },
+
+    updateProfile: async (_parent: any, args: Profile, context: Context) => {
+      if (!context.user) {
+        throw Error("Not authorized to make this request.");
+      }
+      if (
+        !args.firstName ||
+        !args.lastName ||
+        !args.location ||
+        !args.occupation ||
+        !args.gender ||
+        !args.birthday ||
+        !args.profilePicture
+      ) {
+        throw Error("All fields must be filled.");
+      }
+      const profile = await context.prisma.profile.update({
+        where: { userId: context.user.id },
+        data: {
+          firstName: args.firstName,
+          lastName: args.lastName,
+          location: args.location,
+          occupation: args.occupation,
+          gender: args.gender,
+          birthday: args.birthday,
+          profilePicture: args.profilePicture,
+          profileCompleted: true
+        }
       });
       return profile;
     }
