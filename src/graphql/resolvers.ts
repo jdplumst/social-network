@@ -14,6 +14,13 @@ export const resolvers = {
       return await context.prisma.profile.findUnique({
         where: { userId: context.user.id }
       });
+    },
+
+    getProfiles: async (parent: any, args: any, context: Context) => {
+      // if (!context.user) {
+      //   throw Error("Not authorized to make this request.");
+      // }
+      return await context.prisma.profile.findMany();
     }
   },
   // User: {
