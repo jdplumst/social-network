@@ -22,7 +22,6 @@ export default function Home() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(email, password);
     login({
       variables: { email: email, password: password },
       onCompleted(data, clientOptions) {
@@ -62,7 +61,9 @@ export default function Home() {
               value={password}
               className="p-2 mb-5 border-solid border-2 border-slate-200 focus:border-slate-500 focus:outline-none rounded-lg block w-full"
             />
-            <button className="text-xl bg-purple-500 hover:bg-purple-700 hover:cursor-pointer text-white p-4 rounded-lg font-bold w-1/4 mx-auto">
+            <button
+              disabled={loading}
+              className="text-xl bg-purple-500 hover:bg-purple-700 hover:cursor-pointer text-white p-4 rounded-lg font-bold w-1/4 mx-auto">
               Log In
             </button>
             {msg && (
