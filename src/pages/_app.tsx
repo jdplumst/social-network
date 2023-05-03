@@ -7,7 +7,6 @@ const client = new ApolloClient({
     process.env.NODE_ENV === "development"
       ? process.env.NEXT_PUBLIC_DEV_URL
       : process.env.NEXT_PUBLIC_PRODUCTION_URL,
-  // uri: "http://localhost:3000/api/graphql",
   cache: new InMemoryCache()
 });
 
