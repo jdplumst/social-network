@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 const GET_USER_PROFILE = gql`
   query getUserProfile {
@@ -19,14 +20,17 @@ const GET_USER_PROFILE = gql`
   }
 `;
 
-export default function Home() {
+export default function Intro() {
+  const [loading, setLoading] = useState(true);
   const { push } = useRouter();
-  const { loading, error, data } = useQuery(GET_USER_PROFILE, {
+  useQuery(GET_USER_PROFILE, {
     onCompleted(data) {
       if (!data.getUserProfile) {
         push("/onboarding/info");
       } else if (data.getUserProfile.profileCompleted) {
         push("/home");
+      } else {
+        setLoading(false);
       }
     }
   });
