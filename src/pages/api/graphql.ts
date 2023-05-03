@@ -13,13 +13,13 @@ const server = new ApolloServer<object>({
 });
 
 async function auth(prisma: PrismaClient, req: NextApiRequest) {
-  const { token } = req.cookies;
-  if (!token) {
+  const { sn_session } = req.cookies;
+  if (!sn_session) {
     return null;
   }
   try {
     const verification = jsonwebtoken.verify(
-      token,
+      sn_session,
       process.env.TOKEN_SECRET as string
     );
     const user = await prisma.user.findUnique({

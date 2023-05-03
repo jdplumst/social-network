@@ -60,7 +60,7 @@ export const resolvers = {
           { expiresIn: 60 * 60 } // expires in 1 hour
         );
         context.res.setHeader("set-cookie", [
-          serialize("token", token, {
+          serialize("sn_session", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== "development",
             sameSite: "strict",
@@ -94,7 +94,7 @@ export const resolvers = {
         { expiresIn: 60 * 60 } // expires in 1 hour
       );
       context.res.setHeader("set-cookie", [
-        serialize("token", token, {
+        serialize("sn_session", token, {
           httpOnly: true,
           secure: process.env.NODE_ENV !== "development",
           sameSite: "strict",

@@ -32,6 +32,9 @@ export default function Intro() {
       } else {
         setLoading(false);
       }
+    },
+    onError() {
+      setLoading(false);
     }
   });
   if (loading) return <p>Loading</p>;
