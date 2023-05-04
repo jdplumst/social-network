@@ -27,6 +27,8 @@ export default function Intro() {
     onCompleted(data) {
       if (!data.getUserProfile) {
         push("/onboarding/info");
+      } else if (!data.getUserProfile.profileCompleted) {
+        push("/onboarding/picture");
       } else if (data.getUserProfile.profileCompleted) {
         push("/home");
       } else {
