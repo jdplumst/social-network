@@ -7,7 +7,7 @@ import { serialize } from "cookie";
 
 export const resolvers = {
   Query: {
-    getUserProfile: async (parent: any, args: any, context: Context) => {
+    getUserProfile: async (_parent: any, _args: any, context: Context) => {
       if (!context.user) {
         throw Error("Not authorized to make this request.");
       }
@@ -17,9 +17,9 @@ export const resolvers = {
     },
 
     getProfiles: async (parent: any, args: any, context: Context) => {
-      // if (!context.user) {
-      //   throw Error("Not authorized to make this request.");
-      // }
+      if (!context.user) {
+        throw Error("Not authorized to make this request.");
+      }
       return await context.prisma.profile.findMany();
     }
   },
@@ -31,7 +31,7 @@ export const resolvers = {
   //   }
   // },
   Mutation: {
-    signUp: async (parent: any, args: User, context: Context) => {
+    signUp: async (_parent: any, args: User, context: Context) => {
       if (!args.email || !args.password) {
         throw Error("All fields must be filled.");
       }
@@ -74,7 +74,7 @@ export const resolvers = {
       }
     },
 
-    login: async (parent: any, args: User, context: Context) => {
+    login: async (_parent: any, args: User, context: Context) => {
       if (!args.email || !args.password) {
         throw Error("All fields must be filled");
       }
@@ -105,7 +105,23 @@ export const resolvers = {
       return { email: user.email, id: user.id };
     },
 
-    createProfile: async (parent: any, args: Profile, context: Context) => {
+    logout: async (_parent: any, _args: void, context: Context) => {
+      if (!context.user) {
+        throw Error("Not authorized to make this request.");
+      }
+      context.res.setHeader("set-cookie", [
+        serialize("sn_session", "", {
+          httpOnly: true,
+          secure: process.env.NODE_ENV !== "development",
+          sameSite: "strict",
+          maxAge: -1,
+          path: "/"
+        })
+      ]);
+      return { email: context.user.email, id: context.user.id };
+    },
+
+    createProfile: async (_parent: any, args: Profile, context: Context) => {
       if (!context.user) {
         throw Error("Not authorized to make this request.");
       }
@@ -139,7 +155,7 @@ export const resolvers = {
       return profile;
     },
 
-    completeProfile: async (parent: any, args: Profile, context: Context) => {
+    completeProfile: async (_parent: any, args: Profile, context: Context) => {
       if (!context.user) {
         throw Error("Not authorized to make this request.");
       }
