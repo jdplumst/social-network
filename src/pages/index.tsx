@@ -31,8 +31,6 @@ export default function Intro() {
         push("/onboarding/picture");
       } else if (data.getUserProfile.profileCompleted) {
         push("/home");
-      } else {
-        setLoading(false);
       }
     },
     onError() {
