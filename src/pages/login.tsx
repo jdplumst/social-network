@@ -21,9 +21,7 @@ const GET_USER_PROFILE = gql`
 
 const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
-    # This part can be named anything
     login(email: $email, password: $password) {
-      # This is name of actual mutation
       id
       email
     }
@@ -52,7 +50,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState<any>(null);
 
-  const [login, { data, error }] = useMutation(LOGIN);
+  const [login] = useMutation(LOGIN);
 
   if (loading) return <p>Loading</p>;
 
