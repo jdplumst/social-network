@@ -60,9 +60,9 @@ export default function Login() {
     e.preventDefault();
     login({
       variables: { email: email, password: password },
-      // onCompleted(data, clientOptions) {
-      //   setMsg(data.login.email);
-      // },
+      onCompleted(data, clientOptions) {
+        push("/home");
+      },
       onError(error, clientOptions) {
         setErrorMsg(error.message);
       }
