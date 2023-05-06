@@ -1,4 +1,4 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -19,9 +19,18 @@ const GET_USER_PROFILE = gql`
   }
 `;
 
+const LOGOUT = gql`
+  mutation logout {
+    logout {
+      email
+      id
+    }
+  }
+`;
+
 export default function OnboardingInfo() {
   const [loading, setLoading] = useState(true);
-  const { push } = useRouter();
+  const { push, replace } = useRouter();
   useQuery(GET_USER_PROFILE, {
     onCompleted(data) {
       if (!data.getUserProfile) {
@@ -36,6 +45,17 @@ export default function OnboardingInfo() {
       push("/");
     }
   });
+
+  const [logout] = useMutation(LOGOUT);
+
+  const handleLogout = () => {
+    logout({
+      onCompleted(data, clientOptions) {
+        window.location.replace("http://localhost:3000");
+      }
+    });
+  };
+
   if (loading) return <p>Loading</p>;
 
   return (
@@ -49,7 +69,7 @@ export default function OnboardingInfo() {
       <main>
         <div className="bg-slate-300 min-h-screen flex justify-center items-center pt-10">
           <button
-            // onClick={logout}
+            onClick={() => handleLogout()}
             className="absolute top-10 left-10 bg-red-500 hover:bg-red-700 hover:cursor-pointer text-white p-4 rounded-lg font-bold">
             Logout
           </button>
