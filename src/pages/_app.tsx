@@ -7,8 +7,8 @@ import { Router } from "next/router";
 const client = new ApolloClient({
   uri:
     process.env.NODE_ENV === "development"
-      ? process.env.NEXT_PUBLIC_DEV_URL
-      : process.env.NEXT_PUBLIC_PRODUCTION_URL,
+      ? process.env.NEXT_PUBLIC_DEV_API_URL
+      : process.env.NEXT_PUBLIC_PROD_API_URL,
   cache: new InMemoryCache()
 });
 

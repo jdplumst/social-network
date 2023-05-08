@@ -1,7 +1,7 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const GET_USER_PROFILE = gql`
   query getUserProfile {
@@ -28,9 +28,36 @@ const LOGOUT = gql`
   }
 `;
 
+const CREATE_PROFILE = gql`
+  mutation CreateProfile(
+    $firstName: String!
+    $lastName: String!
+    $location: String!
+    $occupation: String!
+    $gender: String!
+    $birthday: Date
+  ) {
+    createProfile(
+      firstName: $firstName
+      lastName: $lastName
+      location: $location
+      occupation: $occupation
+      gender: $gender
+      birthday: $birthday
+    ) {
+      firstName
+      lastName
+      location
+      occupation
+      gender
+      birthday
+    }
+  }
+`;
+
 export default function OnboardingInfo() {
   const [loading, setLoading] = useState(true);
-  const { push, replace } = useRouter();
+  const { push } = useRouter();
   useQuery(GET_USER_PROFILE, {
     onCompleted(data) {
       if (!data.getUserProfile) {
@@ -47,11 +74,44 @@ export default function OnboardingInfo() {
   });
 
   const [logout] = useMutation(LOGOUT);
+  const [createProfile] = useMutation(CREATE_PROFILE);
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [location, setLocation] = useState("");
+  const [occupation, setOccupation] = useState("");
+  const [gender, setGender] = useState("");
+  const [birthday, setBirthday] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const handleLogout = () => {
     logout({
       onCompleted(data, clientOptions) {
         window.location.replace("http://localhost:3000");
+      }
+    });
+  };
+
+  const handleCreateProfile = (e: React.FormEvent) => {
+    e.preventDefault();
+    createProfile({
+      variables: {
+        firstName: firstName,
+        lastName: lastName,
+        location: location,
+        occupation: occupation,
+        gender: gender,
+        birthday: new Date(birthday)
+      },
+      onCompleted(data, clientOptions) {
+        window.location.replace(
+          process.env.NODE_ENV === "development"
+            ? (process.env.NEXT_PUBLIC_DEV_URL as string)
+            : (process.env.NEXT_PUBLIC_PROD_URL as string)
+        );
+      },
+      onError(error, clientOptions) {
+        setError(error.message);
       }
     });
   };
@@ -74,7 +134,7 @@ export default function OnboardingInfo() {
             Logout
           </button>
           <form
-            // onSubmit={createProfile}
+            onSubmit={handleCreateProfile}
             className="flex flex-col p-10 bg-white w-1/2 h-1/3">
             <h3 className="text-3xl text-center pb-5 font-bold">
               Profile Information
@@ -84,8 +144,8 @@ export default function OnboardingInfo() {
                 <label className="font-bold text-xl">First Name:</label>
                 <input
                   type="text"
-                  // onChange={(e) => setFirstName(e.target.value)}
-                  // value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  value={firstName}
                   className="p-2 border-solid border-2 border-slate-200 focus:border-slate-500 focus:outline-none rounded-lg block w-full"
                 />
               </div>
@@ -93,8 +153,8 @@ export default function OnboardingInfo() {
                 <label className="font-bold text-xl">Last Name:</label>
                 <input
                   type="text"
-                  // onChange={(e) => setLastName(e.target.value)}
-                  // value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  value={lastName}
                   className="p-2 border-solid border-2 border-slate-200 focus:border-slate-500 focus:outline-none rounded-lg block w-full"
                 />
               </div>
@@ -102,8 +162,8 @@ export default function OnboardingInfo() {
                 <label className="font-bold text-xl">Location:</label>
                 <input
                   type="text"
-                  // onChange={(e) => setLocation(e.target.value)}
-                  // value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  value={location}
                   className="p-2 border-solid border-2 border-slate-200 focus:border-slate-500 focus:outline-none rounded-lg block w-full"
                 />
               </div>
@@ -111,8 +171,8 @@ export default function OnboardingInfo() {
                 <label className="font-bold text-xl">Occupation:</label>
                 <input
                   type="text"
-                  // onChange={(e) => setOccupation(e.target.value)}
-                  // value={occupation}
+                  onChange={(e) => setOccupation(e.target.value)}
+                  value={occupation}
                   className="p-2 border-solid border-2 border-slate-200 focus:border-slate-500 focus:outline-none rounded-lg block w-full"
                 />
               </div>
@@ -120,8 +180,8 @@ export default function OnboardingInfo() {
                 <label className="font-bold text-xl">Gender:</label>
                 <input
                   type="text"
-                  // onChange={(e) => setGender(e.target.value)}
-                  // value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  value={gender}
                   className="p-2 border-solid border-2 border-slate-200 focus:border-slate-500 focus:outline-none rounded-lg block w-full"
                 />
               </div>
@@ -129,8 +189,8 @@ export default function OnboardingInfo() {
                 <label className="font-bold text-xl">Birthday:</label>
                 <input
                   type="date"
-                  // onChange={(e) => setBirthday(e.target.value)}
-                  // value={birthday}
+                  onChange={(e) => setBirthday(e.target.value)}
+                  value={birthday}
                   className="p-2 border-solid border-2 border-slate-200 focus:border-slate-500 focus:outline-none rounded-lg block w-full"
                 />
               </div>
@@ -138,11 +198,11 @@ export default function OnboardingInfo() {
             <button className="text-xl bg-purple-500 hover:bg-purple-700 hover:cursor-pointer text-white p-4 rounded-lg font-bold w-1/4 mx-auto mt-10">
               Next
             </button>
-            {/* {error && (
+            {error && (
               <div className="bg-pink-200 border-solid border-4 border-pink-300 mx-auto mt-5 p-2 w-3/5 text-center">
                 {error}
               </div>
-            )} */}
+            )}
           </form>
         </div>
       </main>
