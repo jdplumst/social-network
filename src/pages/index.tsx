@@ -47,16 +47,16 @@ export default function Intro() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex flex-col justify-evenly items-center min-h-screen color">
+      <main className="color flex min-h-screen flex-col items-center justify-evenly">
         <h1 className="text-8xl">Social Network</h1>
         <div className="flex">
           <Link href="/login">
-            <button className="text-4xl mr-32 bg-purple-600 hover:bg-purple-700 hover:cursor-pointer text-white p-4 rounded-lg font-bold">
+            <button className="mr-32 rounded-lg bg-purple-600 p-4 text-4xl font-bold text-white hover:cursor-pointer hover:bg-purple-700">
               Log In
             </button>
           </Link>
           <Link href="/signup">
-            <button className="text-4xl bg-green-600 hover:bg-green-700 hover:cursor-pointer text-white p-4 rounded-lg font-bold">
+            <button className="rounded-lg bg-green-600 p-4 text-4xl font-bold text-white hover:cursor-pointer hover:bg-green-700">
               Sign Up
             </button>
           </Link>

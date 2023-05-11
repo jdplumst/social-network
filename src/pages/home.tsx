@@ -56,9 +56,9 @@ export default function Home() {
 
   return (
     <main className="color min-h-screen">
-      <div className="grid gap-5 justify-center p-4">
+      <div className="grid justify-center gap-5 p-4">
         {data.getProfiles.map((p: any) => (
-          <div key={p.id} className="border-2 border-color p-4">
+          <div key={p.id} className="border-color border-2 p-4">
             {p.firstName} {p.lastName}
           </div>
         ))}

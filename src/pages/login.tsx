@@ -76,32 +76,32 @@ export default function Login() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className="color min-h-screen flex justify-center items-center pt-10">
+        <div className="color flex min-h-screen items-center justify-center pt-10">
           <form
             onSubmit={handleLogin}
-            className="flex flex-col p-10 w-1/2 h-1/3 border-2 border-color">
-            <h3 className="text-3xl text-center pb-5 font-bold">Login</h3>
+            className="border-color flex h-1/3 w-1/2 flex-col border-2 p-10">
+            <h3 className="pb-5 text-center text-3xl font-bold">Login</h3>
             <label className="font-bold">Email:</label>
             <input
               type="email"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
-              className="p-2 mb-5 border-solid border-2 focus:border-slate-500 focus:outline-none rounded-lg block w-full bg-inherit border-color"
+              className="border-color mb-5 block w-full rounded-lg border-2 border-solid bg-inherit p-2 focus:border-slate-500 focus:outline-none"
             />
             <label className="font-bold">Password:</label>
             <input
               type="password"
               onChange={(e) => setPassword(e.target.value)}
               value={password}
-              className="p-2 mb-5 border-solid border-2 focus:border-slate-500 focus:outline-none rounded-lg block w-full bg-inherit border-color"
+              className="border-color mb-5 block w-full rounded-lg border-2 border-solid bg-inherit p-2 focus:border-slate-500 focus:outline-none"
             />
             <button
               disabled={loading}
-              className="text-xl bg-purple-600 hover:bg-purple-700 hover:cursor-pointer text-white p-4 rounded-lg font-bold mx-auto">
+              className="mx-auto rounded-lg bg-purple-600 p-4 text-xl font-bold text-white hover:cursor-pointer hover:bg-purple-700">
               Login
             </button>
             {errorMsg && (
-              <div className="bg-pink-500 border-solid border-2 border-pink-700 mt-5 p-2 flex justify-center font-bold mx-auto">
+              <div className="mx-auto mt-5 flex justify-center border-2 border-solid border-pink-700 bg-pink-500 p-2 font-bold">
                 {errorMsg}
               </div>
             )}

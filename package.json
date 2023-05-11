@@ -36,6 +36,8 @@
     "@types/cookie": "^0.5.1",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/validator": "^13.7.15",
+    "prettier": "^2.8.8",
+    "prettier-plugin-tailwindcss": "^0.2.8",
     "prisma": "^4.13.0"
   }
 }
