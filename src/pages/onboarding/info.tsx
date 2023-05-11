@@ -30,11 +30,11 @@ const LOGOUT = gql`
 
 const CREATE_PROFILE = gql`
   mutation CreateProfile(
-    $firstName: String!
-    $lastName: String!
-    $location: String!
-    $occupation: String!
-    $gender: String!
+    $firstName: String
+    $lastName: String
+    $location: String
+    $occupation: String
+    $gender: String
     $birthday: Date
   ) {
     createProfile(
@@ -85,9 +85,17 @@ export default function OnboardingInfo() {
   const [error, setError] = useState<string | null>(null);
 
   const handleLogout = () => {
+    setLoading(true);
     logout({
       onCompleted(data, clientOptions) {
-        window.location.replace("http://localhost:3000");
+        window.location.replace(
+          process.env.NODE_ENV === "development"
+            ? (process.env.NEXT_PUBLIC_DEV_URL as string)
+            : (process.env.NEXT_PUBLIC_PROD_URL as string)
+        );
+      },
+      onError(error, clientOptions) {
+        setLoading(false);
       }
     });
   };
