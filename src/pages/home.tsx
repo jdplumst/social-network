@@ -1,4 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -55,14 +56,22 @@ export default function Home() {
   if (loading || load) return <p>Loading</p>;
 
   return (
-    <main className="color min-h-screen">
-      <div className="grid justify-center gap-5 p-4">
-        {data.getProfiles.map((p: any) => (
-          <div key={p.id} className="border-color border-2 p-4">
-            {p.firstName} {p.lastName}
-          </div>
-        ))}
-      </div>
-    </main>
+    <>
+      <Head>
+        <title>Social Network</title>
+        <meta name="description" content="Social Network" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <main className="color min-h-screen">
+        <div className="grid justify-center gap-5 p-4">
+          {data.getProfiles.map((p: any) => (
+            <div key={p.id} className="border-color border-2 p-4">
+              {p.firstName} {p.lastName}
+            </div>
+          ))}
+        </div>
+      </main>
+    </>
   );
 }
