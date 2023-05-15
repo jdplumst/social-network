@@ -60,11 +60,11 @@ export default function OnboardingInfo() {
   const { push } = useRouter();
   useQuery(GET_USER_PROFILE, {
     onCompleted(data) {
-      if (!data.getUserProfile) {
+      if (!data.userProfile) {
         setLoading(false);
-      } else if (!data.getUserProfile.profileCompleted) {
+      } else if (!data.userProfile.profileCompleted) {
         push("/onboarding/picture");
-      } else if (data.getUserProfile.profileCompleted) {
+      } else if (data.userProfile.profileCompleted) {
         push("/home");
       }
     },

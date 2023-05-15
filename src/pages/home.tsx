@@ -38,11 +38,11 @@ export default function Home() {
   const { push } = useRouter();
   useQuery(GET_USER_PROFILE, {
     onCompleted(data) {
-      if (!data.getUserProfile) {
+      if (!data.userProfile) {
         push("/onboarding/info");
-      } else if (!data.getUserProfile.profileCompleted) {
+      } else if (!data.userProfile.profileCompleted) {
         push("/onboarding/picture");
-      } else if (data.getUserProfile.profileCompleted) {
+      } else if (data.userProfile.profileCompleted) {
         setLoad(false);
       }
     },
@@ -65,7 +65,7 @@ export default function Home() {
       </Head>
       <main className="color min-h-screen">
         <div className="grid justify-center gap-5 p-4">
-          {data.getProfiles.map((p: any) => (
+          {data.profiles.map((p: any) => (
             <div key={p.id} className="border-color border-2 p-4">
               {p.firstName} {p.lastName}
             </div>

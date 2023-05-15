@@ -33,11 +33,11 @@ export default function Signup() {
   const { push } = useRouter();
   useQuery(GET_USER_PROFILE, {
     onCompleted(data) {
-      if (!data.getUserProfile) {
+      if (!data.userProfile) {
         push("/onboarding/info");
-      } else if (!data.getUserProfile.profileCompleted) {
+      } else if (!data.userProfile.profileCompleted) {
         push("/onboarding/picture");
-      } else if (data.getUserProfile.profileCompleted) {
+      } else if (data.userProfile.profileCompleted) {
         push("/home");
       }
     },
