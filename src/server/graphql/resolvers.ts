@@ -4,7 +4,8 @@ import { profileResolvers } from "./resolvers/profile";
 
 export const resolvers = {
   Query: {
-    ...profileResolvers.Query
+    ...profileResolvers.Query,
+    ...postResolvers.Query
   },
   Mutation: {
     ...authResolvers,

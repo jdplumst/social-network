@@ -52,8 +52,9 @@ export const typeDefs = `#graphql
   }
 
   type Query {
-    userProfile: Profile
-    profiles: [Profile]
+    userProfile: Profile,
+    profiles: [Profile],
+    posts: [Post]
   }
 
   type Mutation {
