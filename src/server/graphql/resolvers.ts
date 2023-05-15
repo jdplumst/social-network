@@ -1,4 +1,5 @@
 import { authResolvers } from "./resolvers/auth";
+import { postResolvers } from "./resolvers/post";
 import { profileResolvers } from "./resolvers/profile";
 
 export const resolvers = {
@@ -7,7 +8,8 @@ export const resolvers = {
   },
   Mutation: {
     ...authResolvers,
-    ...profileResolvers.Mutation
+    ...profileResolvers.Mutation,
+    ...postResolvers.Mutation
   }
 };
 

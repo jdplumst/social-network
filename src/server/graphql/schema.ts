@@ -74,5 +74,6 @@ export const typeDefs = `#graphql
                   gender: String,
                   birthday: Date,
                   profilePicture: String): Profile,
+    createPost(profileId: String, description: String): Post
   }
 `;
