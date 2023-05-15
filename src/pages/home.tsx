@@ -33,6 +33,18 @@ const GET_PROFILES = gql`
   }
 `;
 
+const GET_POSTS = gql`
+  query Posts {
+    posts {
+      id
+      profileId
+      description
+      createDate
+      modifyDate
+    }
+  }
+`;
+
 export default function Home() {
   const [load, setLoad] = useState(true);
   const { push } = useRouter();
@@ -51,7 +63,15 @@ export default function Home() {
     }
   });
 
-  const { loading, data } = useQuery(GET_PROFILES);
+  // const { loading, data } = useQuery(GET_PROFILES);
+
+  const [posts, setPosts] = useState([]);
+
+  const { loading } = useQuery(GET_POSTS, {
+    onCompleted(data) {
+      setPosts(data.posts);
+    }
+  });
 
   if (loading || load) return <p>Loading</p>;
 
@@ -65,9 +85,9 @@ export default function Home() {
       </Head>
       <main className="color min-h-screen">
         <div className="grid justify-center gap-5 p-4">
-          {data.profiles.map((p: any) => (
+          {posts.map((p: any) => (
             <div key={p.id} className="border-color border-2 p-4">
-              {p.firstName} {p.lastName}
+              {p.description} {p.createDate}
             </div>
           ))}
         </div>
