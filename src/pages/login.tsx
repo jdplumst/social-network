@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 const GET_USER_PROFILE = gql`
   query getUserProfile {
-    getUserProfile {
+    userProfile {
       id
       firstName
       lastName
