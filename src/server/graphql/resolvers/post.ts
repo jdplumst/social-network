@@ -1,3 +1,4 @@
+import { MutationCreatePostArgs } from "../__generated__/graphql";
 import { Context } from "@apollo/client";
 
 export const postResolvers = {
@@ -14,7 +15,11 @@ export const postResolvers = {
   },
 
   Mutation: {
-    createPost: async (_parent: any, args: any, context: Context) => {
+    createPost: async (
+      _parent: any,
+      args: MutationCreatePostArgs,
+      context: Context
+    ) => {
       if (!context.user || !args.profileId) {
         throw Error("Not authorized to make this request.");
       }

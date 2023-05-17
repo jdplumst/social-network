@@ -1,11 +1,16 @@
 import { ApolloServer } from "@apollo/server";
-import { typeDefs } from "@/server/graphql/schema";
+// import { typeDefs } from "@/server/graphql/schema";
 import { resolvers } from "@/server/graphql/resolvers";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { prisma } from "../../server/db";
 import { PrismaClient } from "@prisma/client";
 import jsonwebtoken from "jsonwebtoken";
 import { NextApiRequest } from "next";
+import { readFileSync } from "fs";
+
+const typeDefs = readFileSync("src/server/graphql/schema.graphql", {
+  encoding: "utf-8"
+});
 
 const server = new ApolloServer<object>({
   typeDefs,

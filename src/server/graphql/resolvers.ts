@@ -1,8 +1,9 @@
+import { Resolvers } from "./__generated__/graphql";
 import { authResolvers } from "./resolvers/auth";
 import { postResolvers } from "./resolvers/post";
 import { profileResolvers } from "./resolvers/profile";
 
-export const resolvers = {
+export const resolvers: Resolvers = {
   Query: {
     ...profileResolvers.Query,
     ...postResolvers.Query

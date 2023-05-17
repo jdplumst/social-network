@@ -1,9 +1,10 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { gql } from "@/__generated__";
 
-const GET_USER_PROFILE = gql`
+const GET_USER_PROFILE = gql(`
   query getUserProfile {
     userProfile {
       id
@@ -17,18 +18,18 @@ const GET_USER_PROFILE = gql`
       profileCompleted
     }
   }
-`;
+`);
 
-const LOGOUT = gql`
+const LOGOUT = gql(`
   mutation logout {
     logout {
       email
       id
     }
   }
-`;
+`);
 
-const CREATE_PROFILE = gql`
+const CREATE_PROFILE = gql(`
   mutation CreateProfile(
     $firstName: String
     $lastName: String
@@ -53,7 +54,7 @@ const CREATE_PROFILE = gql`
       birthday
     }
   }
-`;
+`);
 
 export default function OnboardingInfo() {
   const [loading, setLoading] = useState(true);

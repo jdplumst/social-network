@@ -1,10 +1,11 @@
 import Head from "next/head";
 import Link from "next/link";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { gql } from "@/__generated__";
 
-const GET_USER_PROFILE = gql`
+const GET_USER_PROFILE = gql(`
   query getUserProfile {
     userProfile {
       id
@@ -18,7 +19,7 @@ const GET_USER_PROFILE = gql`
       profileCompleted
     }
   }
-`;
+`);
 
 export default function Intro() {
   const [loading, setLoading] = useState(true);

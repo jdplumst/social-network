@@ -1,12 +1,15 @@
 import { Context } from "@apollo/client";
-import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import validator from "validator";
 import jsonwebtoken from "jsonwebtoken";
 import { serialize } from "cookie";
+import {
+  MutationLoginArgs,
+  MutationSignUpArgs
+} from "../__generated__/graphql";
 
 export const authResolvers = {
-  signUp: async (_parent: any, args: User, context: Context) => {
+  signUp: async (_parent: any, args: MutationSignUpArgs, context: Context) => {
     if (!args.email || !args.password) {
       throw Error("All fields must be filled.");
     }
@@ -49,7 +52,7 @@ export const authResolvers = {
     }
   },
 
-  login: async (_parent: any, args: User, context: Context) => {
+  login: async (_parent: any, args: MutationLoginArgs, context: Context) => {
     if (!args.email || !args.password) {
       throw Error("All fields must be filled");
     }
@@ -80,7 +83,7 @@ export const authResolvers = {
     return { email: user.email, id: user.id };
   },
 
-  logout: async (_parent: any, _args: void, context: Context) => {
+  logout: async (_parent: any, _args: any, context: Context) => {
     if (!context.user) {
       throw Error("Not authorized to make this request.");
     }

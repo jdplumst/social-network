@@ -1,5 +1,9 @@
+import {
+  MutationCompleteProfileArgs,
+  MutationCreateProfileArgs,
+  MutationUpdateProfileArgs
+} from "../__generated__/graphql";
 import { Context } from "@apollo/client";
-import { Profile } from "@prisma/client";
 
 export const profileResolvers = {
   Query: {
@@ -12,7 +16,7 @@ export const profileResolvers = {
       });
     },
 
-    profiles: async (parent: any, args: any, context: Context) => {
+    profiles: async (_parent: any, _args: any, context: Context) => {
       if (!context.user) {
         throw Error("Not authorized to make this request.");
       }
@@ -20,7 +24,11 @@ export const profileResolvers = {
     }
   },
   Mutation: {
-    createProfile: async (_parent: any, args: Profile, context: Context) => {
+    createProfile: async (
+      _parent: any,
+      args: MutationCreateProfileArgs,
+      context: Context
+    ) => {
       if (!context.user) {
         throw Error("Not authorized to make this request.");
       }
@@ -54,7 +62,11 @@ export const profileResolvers = {
       return profile;
     },
 
-    completeProfile: async (_parent: any, args: Profile, context: Context) => {
+    completeProfile: async (
+      _parent: any,
+      args: MutationCompleteProfileArgs,
+      context: Context
+    ) => {
       if (!context.user) {
         throw Error("Not authorized to make this request.");
       }
@@ -72,7 +84,11 @@ export const profileResolvers = {
       return profile;
     },
 
-    updateProfile: async (_parent: any, args: Profile, context: Context) => {
+    updateProfile: async (
+      _parent: any,
+      args: MutationUpdateProfileArgs,
+      context: Context
+    ) => {
       if (!context.user) {
         throw Error("Not authorized to make this request.");
       }

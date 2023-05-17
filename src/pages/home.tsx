@@ -1,29 +1,32 @@
-import { useQuery, gql, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-interface Profile {
-  id: string;
-  firstName: string;
-  lastName: string;
-  location: string;
-  occupation: string;
-  gender: string;
-  birthday: Date;
-  profilePicture: string;
-  profileCompleted: boolean;
-}
+import { gql } from "@/__generated__";
+import { GetUserProfileQuery, Post, Profile } from "@/__generated__/graphql";
 
-interface Post {
-  id: String;
-  profileId: String;
-  description: String;
-  createDate: Date;
-  modifyDate: Date;
-}
+// interface Profile {
+//   id: string;
+//   firstName: string;
+//   lastName: string;
+//   location: string;
+//   occupation: string;
+//   gender: string;
+//   birthday: Date;
+//   profilePicture: string;
+//   profileCompleted: boolean;
+// }
 
-const GET_USER_PROFILE = gql`
+// interface Post {
+//   id: String;
+//   profileId: String;
+//   description: String;
+//   createDate: Date;
+//   modifyDate: Date;
+// }
+
+const GET_USER_PROFILE = gql(`
   query getUserProfile {
     userProfile {
       id
@@ -37,9 +40,9 @@ const GET_USER_PROFILE = gql`
       profileCompleted
     }
   }
-`;
+`);
 
-const GET_PROFILES = gql`
+const GET_PROFILES = gql(`
   query getProfiles {
     profiles {
       id
@@ -51,9 +54,9 @@ const GET_PROFILES = gql`
       birthday
     }
   }
-`;
+`);
 
-const GET_POSTS = gql`
+const GET_POSTS = gql(`
   query Posts {
     posts {
       id
@@ -63,9 +66,9 @@ const GET_POSTS = gql`
       modifyDate
     }
   }
-`;
+`);
 
-const CREATE_POST = gql`
+const CREATE_POST = gql(`
   mutation CreatePost($profileId: String, $description: String) {
     createPost(profileId: $profileId, description: $description) {
       id
@@ -75,7 +78,7 @@ const CREATE_POST = gql`
       modifyDate
     }
   }
-`;
+`);
 
 export default function Home() {
   const [load, setLoad] = useState(true);
@@ -98,9 +101,7 @@ export default function Home() {
     }
   });
 
-  // const { loading, data } = useQuery(GET_PROFILES);
-
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<Post[] | null>();
   const [postLength, setPostLength] = useState(0);
   const [description, setDescription] = useState("");
 
@@ -122,7 +123,7 @@ export default function Home() {
     createPost({
       variables: { profileId: profile?.id, description: description },
       onCompleted(data, clientOptions) {
-        setPosts((prevPosts) => [data.createPost, ...prevPosts]);
+        setPosts((prevPosts) => [data.createPost, ...(prevPosts ?? [])]);
       },
       onError(error, clientOptions) {
         console.log(error.message);
@@ -140,7 +141,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="color min-h-screen">
+      <main className="color min-h-screen p-4">
         <div className="mx-auto mb-5 w-1/2 rounded-lg border-2 border-slate-300 p-2">
           <div className="flex justify-center">
             <textarea
@@ -153,18 +154,19 @@ export default function Home() {
             <span className="text-[12px]">{postLength}/255</span>
             <button
               onClick={() => handleCreatePost()}
-              className="ml-5 rounded-lg bg-purple-500 px-4 py-2 font-bold text-white hover:cursor-pointer hover:bg-purple-700">
+              className="ml-5 rounded-lg bg-purple-600 px-4 py-2 font-bold text-white hover:cursor-pointer hover:bg-purple-700">
               Add Post
             </button>
           </div>
           {postError && <div className="text-red-500">{postError.message}</div>}
         </div>
         <div className="grid justify-center gap-5 p-4">
-          {posts.map((p: any) => (
-            <div key={p.id} className="border-color border-2 p-4">
-              {p.description} {p.createDate}
-            </div>
-          ))}
+          {posts &&
+            posts.map((p: any) => (
+              <div key={p.id} className="border-color border-2 p-4">
+                {p.description} {p.createDate}
+              </div>
+            ))}
         </div>
       </main>
     </>

@@ -1,9 +1,10 @@
 import Head from "next/head";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { gql } from "@/__generated__";
 
-const GET_USER_PROFILE = gql`
+const GET_USER_PROFILE = gql(`
   query getUserProfile {
     userProfile {
       id
@@ -17,16 +18,16 @@ const GET_USER_PROFILE = gql`
       profileCompleted
     }
   }
-`;
+`);
 
-const LOGIN = gql`
+const LOGIN = gql(`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       id
       email
     }
   }
-`;
+`);
 
 export default function Login() {
   const [loading, setLoading] = useState(true);
