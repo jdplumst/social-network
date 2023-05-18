@@ -101,6 +101,7 @@ export type Post = {
   id?: Maybe<Scalars['String']>;
   likes?: Maybe<Array<Maybe<Like>>>;
   modifyDate?: Maybe<Scalars['Date']>;
+  profile?: Maybe<Profile>;
   profileId?: Maybe<Scalars['String']>;
 };
 
@@ -130,7 +131,6 @@ export type User = {
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
-  profile?: Maybe<Profile>;
 };
 
 export type GetUserProfileQueryVariables = Exact<{ [key: string]: never; }>;

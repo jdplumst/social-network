@@ -1,7 +1,8 @@
-import { Resolvers } from "./server-gen/graphql";
+import { Post, Resolvers } from "./server-gen/graphql";
 import { authResolvers } from "./resolvers/auth";
 import { postResolvers } from "./resolvers/post";
 import { profileResolvers } from "./resolvers/profile";
+import { Context } from "@apollo/client";
 
 export const resolvers: Resolvers = {
   Query: {
@@ -12,13 +13,13 @@ export const resolvers: Resolvers = {
     ...authResolvers,
     ...profileResolvers.Mutation,
     ...postResolvers.Mutation
+  },
+  Post: {
+    profile: async (parent: Post, _args: any, context: Context) => {
+      const profile = await context.prisma.profile.findUnique({
+        where: { id: parent.profileId }
+      });
+      return profile;
+    }
   }
 };
-
-// User: {
-//   profile: async (parent: any, args: any, context: Context) => {
-//     return await context.prisma.profile.findUnique({
-//       where: { userId: parent.id }
-//     });
-//   }
-// },

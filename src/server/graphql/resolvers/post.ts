@@ -1,9 +1,9 @@
-import { MutationCreatePostArgs } from "../server-gen/graphql";
+import { MutationCreatePostArgs, Post } from "../server-gen/graphql";
 import { Context } from "@apollo/client";
 
 export const postResolvers = {
   Query: {
-    posts: async (_parent: any, args: any, context: Context) => {
+    posts: async (_parent: any, _args: any, context: Context) => {
       if (!context.user) {
         throw Error("Not authorized to make this request.");
       }

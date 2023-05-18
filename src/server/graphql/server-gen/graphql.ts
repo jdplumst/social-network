@@ -101,6 +101,7 @@ export type Post = {
   id?: Maybe<Scalars['String']>;
   likes?: Maybe<Array<Maybe<Like>>>;
   modifyDate?: Maybe<Scalars['Date']>;
+  profile?: Maybe<Profile>;
   profileId?: Maybe<Scalars['String']>;
 };
 
@@ -130,7 +131,6 @@ export type User = {
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
-  profile?: Maybe<Profile>;
 };
 
 
@@ -276,6 +276,7 @@ export type PostResolvers<ContextType = any, ParentType extends ResolversParentT
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   likes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Like']>>>, ParentType, ContextType>;
   modifyDate?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  profile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType>;
   profileId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -304,7 +305,6 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   password?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  profile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

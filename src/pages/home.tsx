@@ -5,26 +5,6 @@ import React, { useState } from "react";
 import { gql } from "@/client-gen";
 import { Post, Profile } from "@/client-gen/graphql";
 
-// interface Profile {
-//   id: string;
-//   firstName: string;
-//   lastName: string;
-//   location: string;
-//   occupation: string;
-//   gender: string;
-//   birthday: Date;
-//   profilePicture: string;
-//   profileCompleted: boolean;
-// }
-
-// interface Post {
-//   id: String;
-//   profileId: String;
-//   description: String;
-//   createDate: Date;
-//   modifyDate: Date;
-// }
-
 const GET_USER_PROFILE = gql(`
   query getUserProfile {
     userProfile {
