@@ -3,10 +3,7 @@ import bcrypt from "bcrypt";
 import validator from "validator";
 import jsonwebtoken from "jsonwebtoken";
 import { serialize } from "cookie";
-import {
-  MutationLoginArgs,
-  MutationSignUpArgs
-} from "../__generated__/graphql";
+import { MutationLoginArgs, MutationSignUpArgs } from "../server-gen/graphql";
 
 export const authResolvers = {
   signUp: async (_parent: any, args: MutationSignUpArgs, context: Context) => {

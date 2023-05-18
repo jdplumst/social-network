@@ -1,4 +1,4 @@
-import { MutationCreatePostArgs } from "../__generated__/graphql";
+import { MutationCreatePostArgs } from "../server-gen/graphql";
 import { Context } from "@apollo/client";
 
 export const postResolvers = {

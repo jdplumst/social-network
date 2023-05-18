@@ -2,9 +2,8 @@ import { useQuery, useMutation } from "@apollo/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-
-import { gql } from "@/__generated__";
-import { GetUserProfileQuery, Post, Profile } from "@/__generated__/graphql";
+import { gql } from "@/client-gen";
+import { Post, Profile } from "@/client-gen/graphql";
 
 // interface Profile {
 //   id: string;

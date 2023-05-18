@@ -1,4 +1,4 @@
-import { Resolvers } from "./__generated__/graphql";
+import { Resolvers } from "./server-gen/graphql";
 import { authResolvers } from "./resolvers/auth";
 import { postResolvers } from "./resolvers/post";
 import { profileResolvers } from "./resolvers/profile";

@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { gql } from "@/__generated__";
+import { gql } from "@/client-gen";
 
 const GET_USER_PROFILE = gql(`
   query getUserProfile {

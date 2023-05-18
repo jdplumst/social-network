@@ -2,7 +2,7 @@ import {
   MutationCompleteProfileArgs,
   MutationCreateProfileArgs,
   MutationUpdateProfileArgs
-} from "../__generated__/graphql";
+} from "../server-gen/graphql";
 import { Context } from "@apollo/client";
 
 export const profileResolvers = {
