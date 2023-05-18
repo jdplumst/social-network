@@ -154,24 +154,24 @@ export default function Home() {
         <div className="flex justify-center">
           <div className="grid w-screen grid-cols-1 justify-center gap-5">
             {posts &&
-              posts.map((p: any) => (
+              posts.map((p) => (
                 <div
                   key={p.id}
                   className="border-color mx-auto w-1/3 overflow-auto border-2 p-4">
                   <div className="flex items-center gap-4 pb-2">
                     <img
-                      src={p.profile.profilePicture}
+                      src={p.profile!.profilePicture!}
                       alt={
-                        p.profile.firstName +
+                        p.profile!.firstName +
                         ` ` +
-                        p.profile.lastName +
+                        p.profile!.lastName +
                         `\'s profile picture`
                       }
                       className="inline h-14 w-14"
                     />{" "}
                     <div className="flex items-end gap-4">
                       <span className="text-3xl font-bold">
-                        {p.profile.firstName} {p.profile.lastName}
+                        {p.profile!.firstName} {p.profile!.lastName}
                       </span>
                       <span>({p.createDate})</span>
                     </div>
