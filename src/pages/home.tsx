@@ -43,6 +43,15 @@ const GET_POSTS = gql(`
       description
       createDate
       modifyDate
+      profile {
+        firstName
+        lastName
+        location
+        occupation
+        gender
+        birthday
+        profilePicture
+      }
     }
   }
 `);
@@ -102,7 +111,10 @@ export default function Home() {
     createPost({
       variables: { profileId: profile?.id, description: description },
       onCompleted(data, clientOptions) {
-        setPosts((prevPosts) => [data.createPost, ...(prevPosts ?? [])]);
+        setPosts((prevPosts) => [
+          { ...data.createPost, profile: profile },
+          ...(prevPosts ?? [])
+        ]);
       },
       onError(error, clientOptions) {
         console.log(error.message);
@@ -139,13 +151,35 @@ export default function Home() {
           </div>
           {postError && <div className="text-red-500">{postError.message}</div>}
         </div>
-        <div className="grid justify-center gap-5 p-4">
-          {posts &&
-            posts.map((p: any) => (
-              <div key={p.id} className="border-color border-2 p-4">
-                {p.description} {p.createDate}
-              </div>
-            ))}
+        <div className="flex justify-center">
+          <div className="grid w-screen grid-cols-1 justify-center gap-5">
+            {posts &&
+              posts.map((p: any) => (
+                <div
+                  key={p.id}
+                  className="border-color mx-auto w-1/3 overflow-auto border-2 p-4">
+                  <div className="flex items-center gap-4 pb-2">
+                    <img
+                      src={p.profile.profilePicture}
+                      alt={
+                        p.profile.firstName +
+                        ` ` +
+                        p.profile.lastName +
+                        `\'s profile picture`
+                      }
+                      className="inline h-14 w-14"
+                    />{" "}
+                    <div className="flex items-end gap-4">
+                      <span className="text-3xl font-bold">
+                        {p.profile.firstName} {p.profile.lastName}
+                      </span>
+                      <span>({p.createDate})</span>
+                    </div>
+                  </div>
+                  <span className="text-xl">{p.description}</span>
+                </div>
+              ))}
+          </div>
         </div>
       </main>
     </>

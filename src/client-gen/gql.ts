@@ -15,7 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  query getUserProfile {\n    userProfile {\n      id\n      firstName\n      lastName\n      location\n      occupation\n      gender\n      birthday\n      profilePicture\n      profileCompleted\n    }\n  }\n": types.GetUserProfileDocument,
     "\n  query getProfiles {\n    profiles {\n      id\n      firstName\n      lastName\n      location\n      occupation\n      gender\n      birthday\n    }\n  }\n": types.GetProfilesDocument,
-    "\n  query Posts {\n    posts {\n      id\n      profileId\n      description\n      createDate\n      modifyDate\n    }\n  }\n": types.PostsDocument,
+    "\n  query Posts {\n    posts {\n      id\n      profileId\n      description\n      createDate\n      modifyDate\n      profile {\n        firstName\n        lastName\n        location\n        occupation\n        gender\n        birthday\n        profilePicture\n      }\n    }\n  }\n": types.PostsDocument,
     "\n  mutation CreatePost($profileId: String, $description: String) {\n    createPost(profileId: $profileId, description: $description) {\n      id\n      description\n      profileId\n      createDate\n      modifyDate\n    }\n  }\n": types.CreatePostDocument,
     "\n  mutation login($email: String!, $password: String!) {\n    login(email: $email, password: $password) {\n      id\n      email\n    }\n  }\n": types.LoginDocument,
     "\n  mutation logout {\n    logout {\n      email\n      id\n    }\n  }\n": types.LogoutDocument,
@@ -49,7 +49,7 @@ export function gql(source: "\n  query getProfiles {\n    profiles {\n      id\n
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query Posts {\n    posts {\n      id\n      profileId\n      description\n      createDate\n      modifyDate\n    }\n  }\n"): (typeof documents)["\n  query Posts {\n    posts {\n      id\n      profileId\n      description\n      createDate\n      modifyDate\n    }\n  }\n"];
+export function gql(source: "\n  query Posts {\n    posts {\n      id\n      profileId\n      description\n      createDate\n      modifyDate\n      profile {\n        firstName\n        lastName\n        location\n        occupation\n        gender\n        birthday\n        profilePicture\n      }\n    }\n  }\n"): (typeof documents)["\n  query Posts {\n    posts {\n      id\n      profileId\n      description\n      createDate\n      modifyDate\n      profile {\n        firstName\n        lastName\n        location\n        occupation\n        gender\n        birthday\n        profilePicture\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
