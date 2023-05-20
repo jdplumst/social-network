@@ -57,7 +57,7 @@ const GET_POSTS = gql(`
 `);
 
 const CREATE_POST = gql(`
-  mutation CreatePost($profileId: String, $description: String) {
+  mutation CreatePost($profileId: String!, $description: String!) {
     createPost(profileId: $profileId, description: $description) {
       id
       description
@@ -109,7 +109,7 @@ export default function Home() {
 
   const handleCreatePost = () => {
     createPost({
-      variables: { profileId: profile?.id, description: description },
+      variables: { profileId: profile?.id!, description: description },
       onCompleted(data, clientOptions) {
         setPosts((prevPosts) => [
           { ...data.createPost, profile: profile },

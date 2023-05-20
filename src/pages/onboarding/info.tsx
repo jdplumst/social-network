@@ -31,12 +31,12 @@ const LOGOUT = gql(`
 
 const CREATE_PROFILE = gql(`
   mutation CreateProfile(
-    $firstName: String
-    $lastName: String
-    $location: String
-    $occupation: String
-    $gender: String
-    $birthday: Date
+    $firstName: String!
+    $lastName: String!
+    $location: String!
+    $occupation: String!
+    $gender: String!
+    $birthday: Date!
   ) {
     createProfile(
       firstName: $firstName
@@ -110,7 +110,7 @@ export default function OnboardingInfo() {
         location: location,
         occupation: occupation,
         gender: gender,
-        birthday: new Date(birthday)
+        birthday: birthday === "" ? birthday : new Date(birthday)
       },
       onCompleted(data, clientOptions) {
         window.location.replace(

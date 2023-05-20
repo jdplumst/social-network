@@ -51,23 +51,23 @@ export type Mutation = {
 
 
 export type MutationCompleteProfileArgs = {
-  profilePicture?: InputMaybe<Scalars['String']>;
+  profilePicture: Scalars['String'];
 };
 
 
 export type MutationCreatePostArgs = {
-  description?: InputMaybe<Scalars['String']>;
-  profileId?: InputMaybe<Scalars['String']>;
+  description: Scalars['String'];
+  profileId: Scalars['String'];
 };
 
 
 export type MutationCreateProfileArgs = {
-  birthday?: InputMaybe<Scalars['Date']>;
-  firstName?: InputMaybe<Scalars['String']>;
-  gender?: InputMaybe<Scalars['String']>;
-  lastName?: InputMaybe<Scalars['String']>;
-  location?: InputMaybe<Scalars['String']>;
-  occupation?: InputMaybe<Scalars['String']>;
+  birthday: Scalars['Date'];
+  firstName: Scalars['String'];
+  gender: Scalars['String'];
+  lastName: Scalars['String'];
+  location: Scalars['String'];
+  occupation: Scalars['String'];
 };
 
 
@@ -260,9 +260,9 @@ export type LikeResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  completeProfile?: Resolver<ResolversTypes['Profile'], ParentType, ContextType, Partial<MutationCompleteProfileArgs>>;
-  createPost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, Partial<MutationCreatePostArgs>>;
-  createProfile?: Resolver<ResolversTypes['Profile'], ParentType, ContextType, Partial<MutationCreateProfileArgs>>;
+  completeProfile?: Resolver<ResolversTypes['Profile'], ParentType, ContextType, RequireFields<MutationCompleteProfileArgs, 'profilePicture'>>;
+  createPost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationCreatePostArgs, 'description' | 'profileId'>>;
+  createProfile?: Resolver<ResolversTypes['Profile'], ParentType, ContextType, RequireFields<MutationCreateProfileArgs, 'birthday' | 'firstName' | 'gender' | 'lastName' | 'location' | 'occupation'>>;
   login?: Resolver<ResolversTypes['Auth'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;
   logout?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType>;
   signUp?: Resolver<ResolversTypes['Auth'], ParentType, ContextType, RequireFields<MutationSignUpArgs, 'email' | 'password'>>;

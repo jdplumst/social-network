@@ -62,14 +62,14 @@ type Mutation {
   login(email: String!, password: String!): Auth!
   logout: Auth
   createProfile(
-    firstName: String
-    lastName: String
-    location: String
-    occupation: String
-    gender: String
-    birthday: Date
+    firstName: String!
+    lastName: String!
+    location: String!
+    occupation: String!
+    gender: String!
+    birthday: Date!
   ): Profile!
-  completeProfile(profilePicture: String): Profile!
+  completeProfile(profilePicture: String!): Profile!
   updateProfile(
     firstName: String
     lastName: String
@@ -79,6 +79,6 @@ type Mutation {
     birthday: Date
     profilePicture: String
   ): Profile!
-  createPost(profileId: String, description: String): Post!
+  createPost(profileId: String!, description: String!): Post!
 }
 # `;

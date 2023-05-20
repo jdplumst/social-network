@@ -29,7 +29,7 @@ export const postResolvers = {
       if (!profile || profile.userId !== context.user.id) {
         throw Error("Not authorized to make this request.");
       }
-      if (!args.description) {
+      if (!args.description || !args.description.replace(/\s/g, "").length) {
         throw Error("Post cannot be empty");
       }
       const post = await context.prisma.post.create({

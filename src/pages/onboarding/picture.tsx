@@ -30,7 +30,7 @@ const LOGOUT = gql(`
 `);
 
 const COMPLETE_PROFILE = gql(`
-  mutation CompleteProfile($profilePicture: String) {
+  mutation CompleteProfile($profilePicture: String!) {
     completeProfile(profilePicture: $profilePicture) {
       id
       firstName
@@ -87,7 +87,7 @@ export default function OnboardingPicture() {
 
   const finishOnboarding = () => {
     completeProfile({
-      variables: { profilePicture: profilePicture },
+      variables: { profilePicture: profilePicture! },
       onCompleted(data, clientOptions) {
         window.location.replace(
           process.env.NODE_ENV === "development"
