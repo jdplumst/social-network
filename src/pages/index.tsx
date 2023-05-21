@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { gql } from "@/client-gen";
@@ -17,6 +17,15 @@ const GET_USER_PROFILE = gql(`
       birthday
       profilePicture
       profileCompleted
+    }
+  }
+`);
+
+const LOGIN = gql(`
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      id
+      email
     }
   }
 `);
@@ -38,6 +47,21 @@ export default function Intro() {
       setLoading(false);
     }
   });
+
+  const [login] = useMutation(LOGIN);
+
+  const handleGuestLogin = () => {
+    login({
+      variables: {
+        email: "guest@gmail.com",
+        password: process.env.NEXT_PUBLIC_GUEST_PWD!
+      },
+      onCompleted(data, clientOptions) {
+        push("/home");
+      }
+    });
+  };
+
   if (loading) return <p>Loading</p>;
 
   return (
@@ -57,10 +81,15 @@ export default function Intro() {
             </button>
           </Link>
           <Link href="/signup">
-            <button className="rounded-lg bg-green-600 p-4 text-4xl font-bold text-white hover:cursor-pointer hover:bg-green-700">
+            <button className="mr-32 rounded-lg bg-green-600 p-4 text-4xl font-bold text-white hover:cursor-pointer hover:bg-green-700">
               Sign Up
             </button>
           </Link>
+          <button
+            onClick={() => handleGuestLogin()}
+            className="rounded-lg bg-slate-600 p-4 text-4xl font-bold text-white hover:cursor-pointer hover:bg-slate-700">
+            Guest Login
+          </button>
         </div>
       </main>
     </>

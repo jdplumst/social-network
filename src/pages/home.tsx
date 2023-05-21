@@ -133,7 +133,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="color min-h-screen p-4">
-        <div className="mx-auto mb-5 w-1/2 rounded-lg border-2 border-slate-300 p-2">
+        <div className="border-color mx-auto mb-5 w-1/2 rounded-lg border-2 p-2">
           <div className="flex justify-center">
             <textarea
               placeholder="Write a Post!"
