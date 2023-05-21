@@ -114,6 +114,7 @@ export default function Home() {
   const [posts, setPosts] = useState<Post[] | null>();
   const [postLength, setPostLength] = useState(0);
   const [description, setDescription] = useState("");
+  const [disabled, setDisabled] = useState(false);
 
   const [createPost, { data, loading: loadingPost, error: postError }] =
     useMutation(CREATE_POST);
@@ -139,6 +140,7 @@ export default function Home() {
   };
 
   const handleCreatePost = () => {
+    setDisabled(true);
     createPost({
       variables: { profileId: profile?.id!, description: description },
       onCompleted(data, clientOptions) {
@@ -151,6 +153,7 @@ export default function Home() {
         console.log(error.message);
       }
     });
+    setDisabled(false);
   };
 
   useEffect(() => {
@@ -180,8 +183,9 @@ export default function Home() {
             <span className="text-[12px]">{postLength}/255</span>
             <button
               onClick={() => handleCreatePost()}
+              disabled={disabled}
               className="ml-5 rounded-lg bg-purple-600 px-4 py-2 font-bold text-white hover:cursor-pointer hover:bg-purple-700">
-              Add Post
+              {loadingPost ? <LoadingSpinner /> : "Add Post"}
             </button>
           </div>
           {postError && <div className="text-red-500">{postError.message}</div>}
