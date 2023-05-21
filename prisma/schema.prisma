@@ -32,6 +32,8 @@ model Profile {
   Post             Post[]
   Comment          Comment[]
   Like             Like[]
+  Followee         Follow[]  @relation("profile")
+  Follower         Follow[]  @relation("follower")
 }
 
 model Post {
@@ -62,4 +64,13 @@ model Like {
   postId    String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
   post      Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model Follow {
+  profileId  String
+  followerId String
+  profile    Profile @relation("profile", fields: [profileId], references: [id], onDelete: Cascade)
+  follower   Profile @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+
+  @@id([profileId, followerId])
 }
