@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { gql } from "@/client-gen";
 import { Post, Profile } from "@/client-gen/graphql";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const GET_USER_PROFILE = gql(`
   query getUserProfile {
@@ -117,17 +118,20 @@ export default function Home() {
   const [createPost, { data, loading: loadingPost, error: postError }] =
     useMutation(CREATE_POST);
 
-  const [getPosts, { loading }] = useLazyQuery(GET_POSTS, {
+  const [getPosts, { loading: loadingPosts }] = useLazyQuery(GET_POSTS, {
     onCompleted(data) {
       setPosts(data.posts);
     }
   });
 
-  const [getFollowingPosts] = useLazyQuery(GET_FOLLOWING_POSTS, {
-    onCompleted(data) {
-      setPosts(data.followingPosts);
+  const [getFollowingPosts, { loading: loadingFollowingPosts }] = useLazyQuery(
+    GET_FOLLOWING_POSTS,
+    {
+      onCompleted(data) {
+        setPosts(data.followingPosts);
+      }
     }
-  });
+  );
 
   const handlePostInput = (e: React.FormEvent<HTMLTextAreaElement>) => {
     setDescription((e.target as HTMLTextAreaElement).value);
@@ -153,7 +157,7 @@ export default function Home() {
     getPosts();
   }, []);
 
-  if (loading || load) return <p>Loading</p>;
+  if (load) return <p>Loading</p>;
 
   return (
     <>
@@ -202,6 +206,7 @@ export default function Home() {
         </div>
         <div className="flex justify-center">
           <div className="grid w-screen grid-cols-1 justify-center gap-5">
+            {(loadingPosts || loadingPosts) && <LoadingSpinner />}
             {posts &&
               posts.map((p) => (
                 <div
