@@ -1,7 +1,7 @@
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { gql } from "@/client-gen";
 import { Post, Profile } from "@/client-gen/graphql";
 
@@ -56,6 +56,27 @@ const GET_POSTS = gql(`
   }
 `);
 
+const GET_FOLLOWING_POSTS = gql(`
+query FollowingPosts($followingPostsProfileId2: String!) {
+  followingPosts(profileId: $followingPostsProfileId2) {
+    id
+    profileId
+    description
+    createDate
+    modifyDate
+    profile {
+      firstName
+      lastName
+      location
+      occupation
+      gender
+      birthday
+      profilePicture
+    }
+  }
+}
+`);
+
 const CREATE_POST = gql(`
   mutation CreatePost($profileId: String!, $description: String!) {
     createPost(profileId: $profileId, description: $description) {
@@ -96,9 +117,15 @@ export default function Home() {
   const [createPost, { data, loading: loadingPost, error: postError }] =
     useMutation(CREATE_POST);
 
-  const { loading } = useQuery(GET_POSTS, {
+  const [getPosts, { loading }] = useLazyQuery(GET_POSTS, {
     onCompleted(data) {
       setPosts(data.posts);
+    }
+  });
+
+  const [getFollowingPosts] = useLazyQuery(GET_FOLLOWING_POSTS, {
+    onCompleted(data) {
+      setPosts(data.followingPosts);
     }
   });
 
@@ -121,6 +148,10 @@ export default function Home() {
       }
     });
   };
+
+  useEffect(() => {
+    getPosts();
+  }, []);
 
   if (loading || load) return <p>Loading</p>;
 
@@ -150,6 +181,24 @@ export default function Home() {
             </button>
           </div>
           {postError && <div className="text-red-500">{postError.message}</div>}
+        </div>
+        <div className="flex justify-center gap-5 pb-4">
+          <button
+            onClick={() => getPosts()}
+            className="rounded-lg bg-purple-600 p-4 text-white hover:cursor-pointer hover:bg-purple-700">
+            All Posts
+          </button>
+          <button
+            onClick={() =>
+              getFollowingPosts({
+                variables: {
+                  followingPostsProfileId2: profile!.id!
+                }
+              })
+            }
+            className="rounded-lg bg-purple-600 p-4 text-white hover:cursor-pointer hover:bg-purple-700">
+            Posts of those you follow
+          </button>
         </div>
         <div className="flex justify-center">
           <div className="grid w-screen grid-cols-1 justify-center gap-5">
