@@ -125,12 +125,12 @@ export default function Home() {
     useMutation(CREATE_POST);
 
   const {
-    data: postsData,
     loading: loadingPosts,
     refetch: refetchPosts,
     networkStatus: networkPosts
   } = useQuery(GET_POSTS, {
     notifyOnNetworkStatusChange: true,
+    fetchPolicy: "network-only",
     onCompleted(data) {
       setPosts(data.posts);
     }
@@ -139,7 +139,6 @@ export default function Home() {
   const [
     getFollowingPosts,
     {
-      data: followingPostsData,
       loading: loadingFollowingPosts,
       refetch: refetchFollowingPosts,
       networkStatus: networkFollowingPosts
@@ -178,16 +177,6 @@ export default function Home() {
     });
   };
 
-  const handleGetPosts = () => {
-    refetchPosts();
-    setPosts(postsData?.posts);
-  };
-
-  const handleGetFollowingPosts = () => {
-    refetchFollowingPosts();
-    setPosts(followingPostsData?.followingPosts);
-  };
-
   if (load) return <p>Loading</p>;
 
   return (
@@ -221,12 +210,12 @@ export default function Home() {
         </div>
         <div className="flex justify-center gap-5 pb-4">
           <button
-            onClick={() => handleGetPosts()}
+            onClick={() => refetchPosts()}
             className="rounded-lg bg-purple-600 p-4 text-white hover:cursor-pointer hover:bg-purple-700">
             All Posts
           </button>
           <button
-            onClick={() => handleGetFollowingPosts()}
+            onClick={() => refetchFollowingPosts()}
             className="rounded-lg bg-purple-600 p-4 text-white hover:cursor-pointer hover:bg-purple-700">
             Posts of those you follow
           </button>
