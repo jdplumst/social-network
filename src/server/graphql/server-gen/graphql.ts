@@ -31,6 +31,12 @@ export type Comment = {
   profile?: Maybe<Profile>;
 };
 
+export type Follow = {
+  __typename?: 'Follow';
+  followerId?: Maybe<Scalars['String']>;
+  profileId?: Maybe<Scalars['String']>;
+};
+
 export type Like = {
   __typename?: 'Like';
   id?: Maybe<Scalars['String']>;
@@ -121,9 +127,15 @@ export type Profile = {
 
 export type Query = {
   __typename?: 'Query';
+  followingPosts?: Maybe<Array<Post>>;
   posts?: Maybe<Array<Post>>;
   profiles?: Maybe<Array<Maybe<Profile>>>;
   userProfile?: Maybe<Profile>;
+};
+
+
+export type QueryFollowingPostsArgs = {
+  profileId: Scalars['String'];
 };
 
 export type User = {
@@ -208,6 +220,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Comment: ResolverTypeWrapper<Comment>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
+  Follow: ResolverTypeWrapper<Follow>;
   Like: ResolverTypeWrapper<Like>;
   Mutation: ResolverTypeWrapper<{}>;
   Post: ResolverTypeWrapper<Post>;
@@ -223,6 +236,7 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   Comment: Comment;
   Date: Scalars['Date'];
+  Follow: Follow;
   Like: Like;
   Mutation: {};
   Post: Post;
@@ -251,6 +265,12 @@ export type CommentResolvers<ContextType = any, ParentType extends ResolversPare
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
   name: 'Date';
 }
+
+export type FollowResolvers<ContextType = any, ParentType extends ResolversParentTypes['Follow'] = ResolversParentTypes['Follow']> = {
+  followerId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  profileId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
 
 export type LikeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Like'] = ResolversParentTypes['Like']> = {
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -296,6 +316,7 @@ export type ProfileResolvers<ContextType = any, ParentType extends ResolversPare
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  followingPosts?: Resolver<Maybe<Array<ResolversTypes['Post']>>, ParentType, ContextType, RequireFields<QueryFollowingPostsArgs, 'profileId'>>;
   posts?: Resolver<Maybe<Array<ResolversTypes['Post']>>, ParentType, ContextType>;
   profiles?: Resolver<Maybe<Array<Maybe<ResolversTypes['Profile']>>>, ParentType, ContextType>;
   userProfile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType>;
@@ -312,6 +333,7 @@ export type Resolvers<ContextType = any> = {
   Auth?: AuthResolvers<ContextType>;
   Comment?: CommentResolvers<ContextType>;
   Date?: GraphQLScalarType;
+  Follow?: FollowResolvers<ContextType>;
   Like?: LikeResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Post?: PostResolvers<ContextType>;

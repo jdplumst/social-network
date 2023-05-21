@@ -31,6 +31,12 @@ export type Comment = {
   profile?: Maybe<Profile>;
 };
 
+export type Follow = {
+  __typename?: 'Follow';
+  followerId?: Maybe<Scalars['String']>;
+  profileId?: Maybe<Scalars['String']>;
+};
+
 export type Like = {
   __typename?: 'Like';
   id?: Maybe<Scalars['String']>;
@@ -121,9 +127,15 @@ export type Profile = {
 
 export type Query = {
   __typename?: 'Query';
+  followingPosts?: Maybe<Array<Post>>;
   posts?: Maybe<Array<Post>>;
   profiles?: Maybe<Array<Maybe<Profile>>>;
   userProfile?: Maybe<Profile>;
+};
+
+
+export type QueryFollowingPostsArgs = {
+  profileId: Scalars['String'];
 };
 
 export type User = {

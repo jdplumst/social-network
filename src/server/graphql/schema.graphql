@@ -51,10 +51,16 @@ type Like {
   post: Post
 }
 
+type Follow {
+  profileId: String
+  followerId: String
+}
+
 type Query {
   userProfile: Profile
   profiles: [Profile]
   posts: [Post!]
+  followingPosts(profileId: String!): [Post!]
 }
 
 type Mutation {

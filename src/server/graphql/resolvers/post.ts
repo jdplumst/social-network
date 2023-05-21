@@ -1,4 +1,8 @@
-import { MutationCreatePostArgs, Post } from "../server-gen/graphql";
+import {
+  MutationCreatePostArgs,
+  Post,
+  QueryFollowingPostsArgs
+} from "../server-gen/graphql";
 import { Context } from "@apollo/client";
 
 export const postResolvers = {
@@ -8,6 +12,26 @@ export const postResolvers = {
         throw Error("Not authorized to make this request.");
       }
       const posts = await context.prisma.post.findMany({
+        orderBy: { createDate: "desc" }
+      });
+      return posts;
+    },
+
+    followingPosts: async (
+      _parent: any,
+      args: QueryFollowingPostsArgs,
+      context: Context
+    ) => {
+      if (!context.user || !args.profileId) {
+        throw Error("Not authorized to make this request.");
+      }
+      const f = await context.prisma.follow.findMany({
+        where: { followerId: args.profileId },
+        select: { profileId: true }
+      });
+      const followees = f.map((f: Post) => f.profileId);
+      const posts = await context.prisma.post.findMany({
+        where: { profileId: { in: followees } },
         orderBy: { createDate: "desc" }
       });
       return posts;
