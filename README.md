@@ -8,9 +8,12 @@ It is now being rebuilt with Next.js.
 
 ## Built With:
 
+- React
 - Next.js
 - TypeScript
 - TailwindCSS
 - PostgreSQL with Supabase
 - Prisma
 - GraphQL
+- Apollo Server
+- Apollo Client
