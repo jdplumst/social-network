@@ -1,7 +1,12 @@
-import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+import {
+  useQuery,
+  useMutation,
+  useLazyQuery,
+  NetworkStatus
+} from "@apollo/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { gql } from "@/client-gen";
 import { Post, Profile } from "@/client-gen/graphql";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -116,23 +121,38 @@ export default function Home() {
   const [description, setDescription] = useState("");
   const [disabled, setDisabled] = useState(false);
 
-  const [createPost, { data, loading: loadingPost, error: postError }] =
+  const [createPost, { loading: loadingPost, error: postError }] =
     useMutation(CREATE_POST);
 
-  const [getPosts, { loading: loadingPosts }] = useLazyQuery(GET_POSTS, {
+  const {
+    data: postsData,
+    loading: loadingPosts,
+    refetch: refetchPosts,
+    networkStatus: networkPosts
+  } = useQuery(GET_POSTS, {
+    notifyOnNetworkStatusChange: true,
     onCompleted(data) {
       setPosts(data.posts);
     }
   });
 
-  const [getFollowingPosts, { loading: loadingFollowingPosts }] = useLazyQuery(
-    GET_FOLLOWING_POSTS,
+  const [
+    getFollowingPosts,
     {
-      onCompleted(data) {
-        setPosts(data.followingPosts);
-      }
+      data: followingPostsData,
+      loading: loadingFollowingPosts,
+      refetch: refetchFollowingPosts,
+      networkStatus: networkFollowingPosts
     }
-  );
+  ] = useLazyQuery(GET_FOLLOWING_POSTS, {
+    variables: {
+      followingPostsProfileId2: profile?.id!
+    },
+    notifyOnNetworkStatusChange: true,
+    onCompleted(data) {
+      setPosts(data.followingPosts);
+    }
+  });
 
   const handlePostInput = (e: React.FormEvent<HTMLTextAreaElement>) => {
     setDescription((e.target as HTMLTextAreaElement).value);
@@ -148,17 +168,25 @@ export default function Home() {
           { ...data.createPost, profile: profile },
           ...(prevPosts ?? [])
         ]);
+        setDescription("");
+        setPostLength(0);
+        setDisabled(false);
       },
       onError(error, clientOptions) {
-        console.log(error.message);
+        setDisabled(false);
       }
     });
-    setDisabled(false);
   };
 
-  useEffect(() => {
-    getPosts();
-  }, []);
+  const handleGetPosts = () => {
+    refetchPosts();
+    setPosts(postsData?.posts);
+  };
+
+  const handleGetFollowingPosts = () => {
+    refetchFollowingPosts();
+    setPosts(followingPostsData?.followingPosts);
+  };
 
   if (load) return <p>Loading</p>;
 
@@ -177,6 +205,7 @@ export default function Home() {
               placeholder="Write a Post!"
               maxLength={255}
               onInput={(e) => handlePostInput(e)}
+              value={description}
               className="mb-5 w-full border-2 border-black bg-inherit p-2 text-inherit"></textarea>
           </div>
           <div className="flex justify-between">
@@ -192,27 +221,25 @@ export default function Home() {
         </div>
         <div className="flex justify-center gap-5 pb-4">
           <button
-            onClick={() => getPosts()}
+            onClick={() => handleGetPosts()}
             className="rounded-lg bg-purple-600 p-4 text-white hover:cursor-pointer hover:bg-purple-700">
             All Posts
           </button>
           <button
-            onClick={() =>
-              getFollowingPosts({
-                variables: {
-                  followingPostsProfileId2: profile!.id!
-                }
-              })
-            }
+            onClick={() => handleGetFollowingPosts()}
             className="rounded-lg bg-purple-600 p-4 text-white hover:cursor-pointer hover:bg-purple-700">
             Posts of those you follow
           </button>
         </div>
         <div className="flex justify-center">
           <div className="grid w-screen grid-cols-1 justify-center gap-5">
-            {(loadingPosts || loadingPosts) && <LoadingSpinner />}
-            {posts &&
-              posts.map((p) => (
+            {loadingPosts ||
+            loadingFollowingPosts ||
+            networkPosts === NetworkStatus.refetch ||
+            networkFollowingPosts === NetworkStatus.refetch ? (
+              <LoadingSpinner />
+            ) : (
+              posts!.map((p) => (
                 <div
                   key={p.id}
                   className="border-color mx-auto w-1/3 overflow-auto border-2 p-4">
@@ -236,7 +263,8 @@ export default function Home() {
                   </div>
                   <span className="text-xl">{p.description}</span>
                 </div>
-              ))}
+              ))
+            )}
           </div>
         </div>
       </main>
