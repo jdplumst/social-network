@@ -22,7 +22,7 @@ type Profile {
   birthday: Date
   profilePicture: String
   profileCompleted: Boolean
-  posts: [Post]
+  posts: [Post!]
 }
 
 type Post {
@@ -58,7 +58,7 @@ type Follow {
 
 type Query {
   userProfile: Profile
-  profile(profileId: String!): Profile
+  getProfile(profileId: String!): Profile
   profiles: [Profile]
   posts: [Post!]
   followingPosts(profileId: String!): [Post!]

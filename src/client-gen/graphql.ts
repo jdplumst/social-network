@@ -120,7 +120,7 @@ export type Profile = {
   lastName?: Maybe<Scalars['String']>;
   location?: Maybe<Scalars['String']>;
   occupation?: Maybe<Scalars['String']>;
-  posts?: Maybe<Array<Maybe<Post>>>;
+  posts?: Maybe<Array<Post>>;
   profileCompleted?: Maybe<Scalars['Boolean']>;
   profilePicture?: Maybe<Scalars['String']>;
 };
@@ -128,8 +128,8 @@ export type Profile = {
 export type Query = {
   __typename?: 'Query';
   followingPosts?: Maybe<Array<Post>>;
+  getProfile?: Maybe<Profile>;
   posts?: Maybe<Array<Post>>;
-  profile?: Maybe<Profile>;
   profiles?: Maybe<Array<Maybe<Profile>>>;
   userProfile?: Maybe<Profile>;
 };
@@ -140,7 +140,7 @@ export type QueryFollowingPostsArgs = {
 };
 
 
-export type QueryProfileArgs = {
+export type QueryGetProfileArgs = {
   profileId: Scalars['String'];
 };
 

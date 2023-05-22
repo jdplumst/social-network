@@ -120,7 +120,7 @@ export type Profile = {
   lastName?: Maybe<Scalars['String']>;
   location?: Maybe<Scalars['String']>;
   occupation?: Maybe<Scalars['String']>;
-  posts?: Maybe<Array<Maybe<Post>>>;
+  posts?: Maybe<Array<Post>>;
   profileCompleted?: Maybe<Scalars['Boolean']>;
   profilePicture?: Maybe<Scalars['String']>;
 };
@@ -128,8 +128,8 @@ export type Profile = {
 export type Query = {
   __typename?: 'Query';
   followingPosts?: Maybe<Array<Post>>;
+  getProfile?: Maybe<Profile>;
   posts?: Maybe<Array<Post>>;
-  profile?: Maybe<Profile>;
   profiles?: Maybe<Array<Maybe<Profile>>>;
   userProfile?: Maybe<Profile>;
 };
@@ -140,7 +140,7 @@ export type QueryFollowingPostsArgs = {
 };
 
 
-export type QueryProfileArgs = {
+export type QueryGetProfileArgs = {
   profileId: Scalars['String'];
 };
 
@@ -315,7 +315,7 @@ export type ProfileResolvers<ContextType = any, ParentType extends ResolversPare
   lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   location?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   occupation?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  posts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Post']>>>, ParentType, ContextType>;
+  posts?: Resolver<Maybe<Array<ResolversTypes['Post']>>, ParentType, ContextType>;
   profileCompleted?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   profilePicture?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -323,8 +323,8 @@ export type ProfileResolvers<ContextType = any, ParentType extends ResolversPare
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   followingPosts?: Resolver<Maybe<Array<ResolversTypes['Post']>>, ParentType, ContextType, RequireFields<QueryFollowingPostsArgs, 'profileId'>>;
+  getProfile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType, RequireFields<QueryGetProfileArgs, 'profileId'>>;
   posts?: Resolver<Maybe<Array<ResolversTypes['Post']>>, ParentType, ContextType>;
-  profile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType, RequireFields<QueryProfileArgs, 'profileId'>>;
   profiles?: Resolver<Maybe<Array<Maybe<ResolversTypes['Profile']>>>, ParentType, ContextType>;
   userProfile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType>;
 };

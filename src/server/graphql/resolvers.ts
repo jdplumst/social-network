@@ -1,4 +1,4 @@
-import { Post, Resolvers } from "./server-gen/graphql";
+import { Post, Profile, Resolvers } from "./server-gen/graphql";
 import { authResolvers } from "./resolvers/auth";
 import { postResolvers } from "./resolvers/post";
 import { profileResolvers } from "./resolvers/profile";
@@ -20,6 +20,15 @@ export const resolvers: Resolvers = {
         where: { id: parent.profileId }
       });
       return profile;
+    }
+  },
+  Profile: {
+    posts: async (parent: Profile, _args: any, context: Context) => {
+      const posts = await context.prisma.post.findMany({
+        where: { profileId: parent.id },
+        orderBy: { createDate: "desc" }
+      });
+      return posts;
     }
   }
 };
