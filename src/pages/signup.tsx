@@ -3,6 +3,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { gql } from "@/client-gen";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const GET_USER_PROFILE = gql(`
   query getUserProfile {
@@ -50,13 +51,15 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState<any>(null);
+  const [disabled, setDisabled] = useState(false);
 
-  const [signup] = useMutation(SIGNUP);
+  const [signup, { loading: signUpLoad }] = useMutation(SIGNUP);
 
   if (loading) return <p>Loading</p>;
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
+    setDisabled(true);
     signup({
       variables: { email: email, password: password },
       onCompleted(data, clientOptions) {
@@ -64,6 +67,7 @@ export default function Signup() {
       },
       onError(error, clientOptions) {
         setErrorMsg(error.message);
+        setDisabled(false);
       }
     });
   };
@@ -95,8 +99,10 @@ export default function Signup() {
             value={password}
             className="border-color mb-5 block w-full rounded-lg border-2 border-solid bg-inherit p-2 focus:border-slate-500 focus:outline-none"
           />
-          <button className="mx-auto w-1/4 rounded-lg bg-green-600 p-4 text-xl font-bold text-white hover:cursor-pointer hover:bg-green-700">
-            Sign Up
+          <button
+            disabled={disabled}
+            className="mx-auto w-1/4 rounded-lg bg-green-600 p-4 text-xl font-bold text-white hover:cursor-pointer hover:bg-green-700">
+            {signUpLoad ? <LoadingSpinner /> : "Sign Up"}
           </button>
           {errorMsg && (
             <div className="mx-auto mt-5 w-3/5 border-2 border-solid border-pink-700 bg-pink-500 p-2 text-center">

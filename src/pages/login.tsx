@@ -3,6 +3,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { gql } from "@/client-gen";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const GET_USER_PROFILE = gql(`
   query getUserProfile {
@@ -50,13 +51,15 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState<any>(null);
+  const [disabled, setDisabled] = useState(false);
 
-  const [login] = useMutation(LOGIN);
+  const [login, { loading: loginLoad }] = useMutation(LOGIN);
 
   if (loading) return <p>Loading</p>;
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    setDisabled(true);
     login({
       variables: { email: email, password: password },
       onCompleted(data, clientOptions) {
@@ -64,6 +67,7 @@ export default function Login() {
       },
       onError(error, clientOptions) {
         setErrorMsg(error.message);
+        setDisabled(false);
       }
     });
   };
@@ -96,9 +100,9 @@ export default function Login() {
             className="border-color mb-5 block w-full rounded-lg border-2 border-solid bg-inherit p-2 focus:border-slate-500 focus:outline-none"
           />
           <button
-            disabled={loading}
+            disabled={disabled}
             className="mx-auto rounded-lg bg-purple-600 p-4 text-xl font-bold text-white hover:cursor-pointer hover:bg-purple-700">
-            Login
+            {loginLoad ? <LoadingSpinner /> : "Login"}
           </button>
           {errorMsg && (
             <div className="mx-auto mt-5 flex justify-center border-2 border-solid border-pink-700 bg-pink-500 p-2 font-bold">

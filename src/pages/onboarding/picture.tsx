@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { gql } from "@/client-gen";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const GET_USER_PROFILE = gql(`
   query getUserProfile {
@@ -64,10 +65,12 @@ export default function OnboardingPicture() {
   });
 
   const [logout] = useMutation(LOGOUT);
-  const [completeProfile] = useMutation(COMPLETE_PROFILE);
+  const [completeProfile, { loading: completeLoad }] =
+    useMutation(COMPLETE_PROFILE);
 
-  const [profilePicture, setProfilePicture] = useState<null | string>(null);
+  const [profilePicture, setProfilePicture] = useState<string>("");
   const [error, setError] = useState<null | string>(null);
+  const [disabled, setDisabled] = useState(false);
 
   const handleLogout = () => {
     setLoading(true);
@@ -86,17 +89,19 @@ export default function OnboardingPicture() {
   };
 
   const finishOnboarding = () => {
+    setDisabled(true);
     completeProfile({
       variables: { profilePicture: profilePicture! },
       onCompleted(data, clientOptions) {
         window.location.replace(
           process.env.NODE_ENV === "development"
-            ? (process.env.NEXT_PUBLIC_DEV_URL as string)
-            : (process.env.NEXT_PUBLIC_PROD_URL as string)
+            ? (process.env.NEXT_PUBLIC_DEV_URL as string) + "/home"
+            : (process.env.NEXT_PUBLIC_PROD_URL as string) + "/home"
         );
       },
       onError(error, clientOptions) {
         setError(error.message);
+        setDisabled(false);
       }
     });
   };
@@ -233,8 +238,9 @@ export default function OnboardingPicture() {
           </div>
           <button
             onClick={() => finishOnboarding()}
+            disabled={disabled}
             className="mx-auto mt-10 w-1/4 rounded-lg bg-purple-600 p-4 font-bold text-white hover:cursor-pointer hover:bg-purple-700">
-            Finish Signup
+            {completeLoad ? <LoadingSpinner /> : "Finish Signup"}
           </button>
           {error && (
             <div className="mx-auto mt-5 w-3/5 border-2 border-solid border-pink-700 bg-pink-500 p-2 text-center">

@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { gql } from "@/client-gen";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const GET_USER_PROFILE = gql(`
   query getUserProfile {
@@ -75,7 +76,7 @@ export default function OnboardingInfo() {
   });
 
   const [logout] = useMutation(LOGOUT);
-  const [createProfile] = useMutation(CREATE_PROFILE);
+  const [createProfile, { loading: createLoad }] = useMutation(CREATE_PROFILE);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -84,6 +85,7 @@ export default function OnboardingInfo() {
   const [gender, setGender] = useState("");
   const [birthday, setBirthday] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [disabled, setDisabled] = useState(false);
 
   const handleLogout = () => {
     setLoading(true);
@@ -103,6 +105,7 @@ export default function OnboardingInfo() {
 
   const handleCreateProfile = (e: React.FormEvent) => {
     e.preventDefault();
+    setDisabled(true);
     createProfile({
       variables: {
         firstName: firstName,
@@ -115,12 +118,15 @@ export default function OnboardingInfo() {
       onCompleted(data, clientOptions) {
         window.location.replace(
           process.env.NODE_ENV === "development"
-            ? (process.env.NEXT_PUBLIC_DEV_URL as string)
-            : (process.env.NEXT_PUBLIC_PROD_URL as string)
+            ? (process.env.NEXT_PUBLIC_DEV_URL as string) +
+                "/onboarding/picture"
+            : (process.env.NEXT_PUBLIC_PROD_URL as string) +
+                "/onboarding/picture"
         );
       },
       onError(error, clientOptions) {
         setError(error.message);
+        setDisabled(false);
       }
     });
   };
@@ -203,8 +209,10 @@ export default function OnboardingInfo() {
               />
             </div>
           </div>
-          <button className="mx-auto mt-10 w-1/4 rounded-lg bg-purple-600 p-4 text-xl font-bold text-white hover:cursor-pointer hover:bg-purple-700">
-            Next
+          <button
+            disabled={disabled}
+            className="mx-auto mt-10 w-1/4 rounded-lg bg-purple-600 p-4 text-xl font-bold text-white hover:cursor-pointer hover:bg-purple-700">
+            {createLoad ? <LoadingSpinner /> : "Next"}
           </button>
           {error && (
             <div className="mx-auto mt-5 w-3/5 border-2 border-solid border-pink-700 bg-pink-500 p-2 text-center">
