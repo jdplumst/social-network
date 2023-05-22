@@ -128,8 +128,8 @@ export type Profile = {
 export type Query = {
   __typename?: 'Query';
   followingPosts?: Maybe<Array<Post>>;
-  getProfile?: Maybe<Profile>;
   posts?: Maybe<Array<Post>>;
+  profile?: Maybe<Profile>;
   profiles?: Maybe<Array<Maybe<Profile>>>;
   userProfile?: Maybe<Profile>;
 };
@@ -140,7 +140,7 @@ export type QueryFollowingPostsArgs = {
 };
 
 
-export type QueryGetProfileArgs = {
+export type QueryProfileArgs = {
   profileId: Scalars['String'];
 };
 
@@ -323,8 +323,8 @@ export type ProfileResolvers<ContextType = any, ParentType extends ResolversPare
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   followingPosts?: Resolver<Maybe<Array<ResolversTypes['Post']>>, ParentType, ContextType, RequireFields<QueryFollowingPostsArgs, 'profileId'>>;
-  getProfile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType, RequireFields<QueryGetProfileArgs, 'profileId'>>;
   posts?: Resolver<Maybe<Array<ResolversTypes['Post']>>, ParentType, ContextType>;
+  profile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType, RequireFields<QueryProfileArgs, 'profileId'>>;
   profiles?: Resolver<Maybe<Array<Maybe<ResolversTypes['Profile']>>>, ParentType, ContextType>;
   userProfile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType>;
 };

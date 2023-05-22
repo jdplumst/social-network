@@ -1,24 +1,29 @@
 import { gql } from "@/client-gen";
-import { Post, Profile } from "@/client-gen/graphql";
-import LoadingPage from "@/components/LoadingPage";
+import { Profile } from "@/client-gen/graphql";
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-// const GET_PROFILE = gql(`
-//   query GetProfile($profileId: String!) {
-//     getProfile(profileId: $profileId) {
-//       id
-//       firstName
-//       lastName
-//       location
-//       occupation
-//       gender
-//       birthday
-//       profilePicture
-//     }
-//   }
-// `);
+const GET_PROFILE = gql(`
+  query getProfile($profileId: String!) {
+    profile(profileId: $profileId) {
+      id
+      firstName
+      lastName
+      location
+      occupation
+      gender
+      birthday
+      posts {
+        id
+        profileId
+        description
+        createDate
+        modifyDate
+      }
+    }
+  }
+`);
 
 const GET_USER_PROFILE = gql(`
   query getUserProfile {
@@ -37,8 +42,6 @@ const GET_USER_PROFILE = gql(`
 `);
 
 export default function Profile() {
-  console.log(typeof GET_USER_PROFILE);
-  // console.log(typeof GET_PROFILE);
   const [load, setLoad] = useState(true);
   const { push } = useRouter();
 
@@ -58,15 +61,6 @@ export default function Profile() {
       push("/");
     }
   });
-
-  // useQuery(GET_PROFILE, {
-  //   onCompleted(data) {
-  //     console.log(data);
-  //   },
-  //   onError(error) {
-  //     console.log(error.message);
-  //   }
-  // });
 
   return (
     <>

@@ -32,7 +32,7 @@ const LOGOUT = gql(`
 `);
 
 const COMPLETE_PROFILE = gql(`
-  mutation CompleteProfile($profilePicture: String!) {
+  mutation completeProfile($profilePicture: String!) {
     completeProfile(profilePicture: $profilePicture) {
       id
       firstName

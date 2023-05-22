@@ -32,7 +32,7 @@ const LOGOUT = gql(`
 `);
 
 const CREATE_PROFILE = gql(`
-  mutation CreateProfile(
+  mutation createProfile(
     $firstName: String!
     $lastName: String!
     $location: String!

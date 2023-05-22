@@ -17,7 +17,7 @@ export const profileResolvers = {
       });
     },
 
-    getProfile: async (
+    profile: async (
       _parent: any,
       args: QueryGetProfileArgs,
       context: Context

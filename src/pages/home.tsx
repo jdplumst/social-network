@@ -43,12 +43,14 @@ const GET_PROFILES = gql(`
       occupation
       gender
       birthday
+      profilePicture
+      profileCompleted
     }
   }
 `);
 
 const GET_POSTS = gql(`
-  query Posts {
+  query getPosts {
     posts {
       id
       profileId
@@ -69,28 +71,28 @@ const GET_POSTS = gql(`
 `);
 
 const GET_FOLLOWING_POSTS = gql(`
-query FollowingPosts($followingPostsProfileId2: String!) {
-  followingPosts(profileId: $followingPostsProfileId2) {
-    id
-    profileId
-    description
-    createDate
-    modifyDate
-    profile {
-      firstName
-      lastName
-      location
-      occupation
-      gender
-      birthday
-      profilePicture
+  query getFollowingPosts($profileId: String!) {
+    followingPosts(profileId: $profileId) {
+      id
+      profileId
+      description
+      createDate
+      modifyDate
+      profile {
+        firstName
+        lastName
+        location
+        occupation
+        gender
+        birthday
+        profilePicture
+      }
     }
   }
-}
 `);
 
 const CREATE_POST = gql(`
-  mutation CreatePost($profileId: String!, $description: String!) {
+  mutation createPost($profileId: String!, $description: String!) {
     createPost(profileId: $profileId, description: $description) {
       id
       description
@@ -151,7 +153,7 @@ export default function Home() {
     }
   ] = useLazyQuery(GET_FOLLOWING_POSTS, {
     variables: {
-      followingPostsProfileId2: profile?.id!
+      profileId: profile?.id!
     },
     notifyOnNetworkStatusChange: true,
     onCompleted(data) {
