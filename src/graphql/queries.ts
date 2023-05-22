@@ -26,6 +26,8 @@ gql`
       occupation
       gender
       birthday
+      profilePicture
+      profileCompleted
       posts {
         id
         profileId
