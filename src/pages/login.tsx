@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { gql } from "@/client-gen";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import LoadingPage from "@/components/LoadingPage";
 
 const GET_USER_PROFILE = gql(`
   query getUserProfile {
@@ -55,8 +56,6 @@ export default function Login() {
 
   const [login, { loading: loginLoad }] = useMutation(LOGIN);
 
-  if (loading) return <p>Loading</p>;
-
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setDisabled(true);
@@ -71,6 +70,8 @@ export default function Login() {
       }
     });
   };
+
+  if (loading) return <LoadingPage />;
 
   return (
     <>

@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { gql } from "@/client-gen";
 import { Post, Profile } from "@/client-gen/graphql";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import LoadingPage from "@/components/LoadingPage";
 
 const GET_USER_PROFILE = gql(`
   query getUserProfile {
@@ -177,7 +178,7 @@ export default function Home() {
     });
   };
 
-  if (load) return <p>Loading</p>;
+  if (load) return <LoadingPage />;
 
   return (
     <>

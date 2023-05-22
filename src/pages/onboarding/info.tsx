@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { gql } from "@/client-gen";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import LoadingPage from "@/components/LoadingPage";
 
 const GET_USER_PROFILE = gql(`
   query getUserProfile {
@@ -131,7 +132,7 @@ export default function OnboardingInfo() {
     });
   };
 
-  if (loading) return <p>Loading</p>;
+  if (loading) return <LoadingPage />;
 
   return (
     <>

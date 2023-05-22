@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import React from "react";
 import { Router } from "next/router";
+import LoadingPage from "@/components/LoadingPage";
 
 const client = new ApolloClient({
   uri:
@@ -33,7 +34,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       {loading ? (
-        <p className="text-8xl font-bold">Loading...</p>
+        <LoadingPage />
       ) : (
         <ApolloProvider client={client}>
           <Component {...pageProps} />
