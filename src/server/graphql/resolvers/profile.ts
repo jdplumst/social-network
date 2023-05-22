@@ -1,7 +1,8 @@
 import {
   MutationCompleteProfileArgs,
   MutationCreateProfileArgs,
-  MutationUpdateProfileArgs
+  MutationUpdateProfileArgs,
+  QueryProfileArgs
 } from "../server-gen/graphql";
 import { Context } from "@apollo/client";
 
@@ -13,6 +14,15 @@ export const profileResolvers = {
       }
       return await context.prisma.profile.findUnique({
         where: { userId: context.user.id }
+      });
+    },
+
+    profile: async (_parent: any, args: QueryProfileArgs, context: Context) => {
+      if (!context.user) {
+        throw Error("Not authorized to make this request.");
+      }
+      return await context.prisma.profile.findUnique({
+        where: { id: args.profileId }
       });
     },
 

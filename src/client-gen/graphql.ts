@@ -129,12 +129,18 @@ export type Query = {
   __typename?: 'Query';
   followingPosts?: Maybe<Array<Post>>;
   posts?: Maybe<Array<Post>>;
+  profile?: Maybe<Profile>;
   profiles?: Maybe<Array<Maybe<Profile>>>;
   userProfile?: Maybe<Profile>;
 };
 
 
 export type QueryFollowingPostsArgs = {
+  profileId: Scalars['String'];
+};
+
+
+export type QueryProfileArgs = {
   profileId: Scalars['String'];
 };
 

@@ -58,6 +58,7 @@ type Follow {
 
 type Query {
   userProfile: Profile
+  profile(profileId: String!): Profile
   profiles: [Profile]
   posts: [Post!]
   followingPosts(profileId: String!): [Post!]
