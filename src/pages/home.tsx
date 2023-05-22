@@ -13,6 +13,7 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import LoadingPage from "@/components/LoadingPage";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import Link from "next/link";
 
 dayjs.extend(relativeTime);
 
@@ -252,9 +253,11 @@ export default function Home() {
                         className="inline h-14 w-14"
                       />{" "}
                       <div className="flex gap-2">
-                        <span className="text-2xl font-bold">
-                          {p.profile!.firstName} {p.profile!.lastName}
-                        </span>
+                        <Link href={`/profile/${p.profileId}`}>
+                          <span className="text-2xl font-bold">
+                            {p.profile!.firstName} {p.profile!.lastName}
+                          </span>
+                        </Link>
                         <span className="text-2xl">·</span>
                         <span className="text-2xl">
                           {dayjs(p.createDate).fromNow()}
