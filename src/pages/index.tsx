@@ -4,6 +4,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { gql } from "@/client-gen";
+import LoadingPage from "@/components/LoadingPage";
 
 const GET_USER_PROFILE = gql(`
   query getUserProfile {
@@ -62,7 +63,7 @@ export default function Intro() {
     });
   };
 
-  if (loading) return <p>Loading</p>;
+  if (loading) return <LoadingPage />;
 
   return (
     <>
