@@ -1,4 +1,3 @@
-# export const typeDefs = `#graphql
 scalar Date
 
 type User {
@@ -88,4 +87,3 @@ type Mutation {
   ): Profile!
   createPost(profileId: String!, description: String!): Post!
 }
-# `;

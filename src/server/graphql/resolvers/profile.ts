@@ -2,7 +2,7 @@ import {
   MutationCompleteProfileArgs,
   MutationCreateProfileArgs,
   MutationUpdateProfileArgs,
-  QueryGetProfileArgs
+  QueryProfileArgs
 } from "../server-gen/graphql";
 import { Context } from "@apollo/client";
 
@@ -17,11 +17,7 @@ export const profileResolvers = {
       });
     },
 
-    profile: async (
-      _parent: any,
-      args: QueryGetProfileArgs,
-      context: Context
-    ) => {
+    profile: async (_parent: any, args: QueryProfileArgs, context: Context) => {
       if (!context.user) {
         throw Error("Not authorized to make this request.");
       }
