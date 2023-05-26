@@ -142,7 +142,7 @@ export default function ProfilePage({
             <div className="flex w-1/2 justify-center">
               <div className="grid w-screen grid-cols-1 justify-center gap-5">
                 {profile?.posts?.map((p) => (
-                  <PostComponent key={p.id} post={p} profile={profile} />
+                  <PostComponent key={p!.id} post={p!} profile={profile} />
                 ))}
               </div>
             </div>

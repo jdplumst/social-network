@@ -20,7 +20,7 @@ export const resolvers: Resolvers = {
   Post: {
     profile: async (parent: Post, _args: any, context: Context) => {
       const profile = await context.prisma.profile.findUnique({
-        where: { id: parent.profileId }
+        where: { id: parent.profileId! }
       });
       return profile!;
     }
@@ -28,7 +28,7 @@ export const resolvers: Resolvers = {
   Profile: {
     posts: async (parent: Profile, _args: any, context: Context) => {
       const posts = await context.prisma.post.findMany({
-        where: { profileId: parent.id },
+        where: { profileId: parent.id! },
         orderBy: { createDate: "desc" }
       });
       return posts;

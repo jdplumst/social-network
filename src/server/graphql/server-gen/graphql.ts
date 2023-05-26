@@ -114,27 +114,27 @@ export type MutationUpdateProfileArgs = {
 export type Post = {
   __typename?: 'Post';
   comments?: Maybe<Array<Maybe<Comment>>>;
-  createDate: Scalars['Date'];
-  description: Scalars['String'];
-  id: Scalars['String'];
+  createDate?: Maybe<Scalars['Date']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   likes?: Maybe<Array<Maybe<Like>>>;
-  modifyDate: Scalars['Date'];
+  modifyDate?: Maybe<Scalars['Date']>;
   profile?: Maybe<Profile>;
-  profileId: Scalars['String'];
+  profileId?: Maybe<Scalars['String']>;
 };
 
 export type Profile = {
   __typename?: 'Profile';
-  birthday: Scalars['Date'];
-  firstName: Scalars['String'];
-  gender: Scalars['String'];
-  id: Scalars['String'];
-  lastName: Scalars['String'];
-  location: Scalars['String'];
-  occupation: Scalars['String'];
+  birthday?: Maybe<Scalars['Date']>;
+  firstName?: Maybe<Scalars['String']>;
+  gender?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  location?: Maybe<Scalars['String']>;
+  occupation?: Maybe<Scalars['String']>;
   posts?: Maybe<Array<Maybe<Post>>>;
-  profileCompleted: Scalars['Boolean'];
-  profilePicture: Scalars['String'];
+  profileCompleted?: Maybe<Scalars['Boolean']>;
+  profilePicture?: Maybe<Scalars['String']>;
 };
 
 export type Query = {
@@ -318,27 +318,27 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type PostResolvers<ContextType = any, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = {
   comments?: Resolver<Maybe<Array<Maybe<ResolversTypes['Comment']>>>, ParentType, ContextType>;
-  createDate?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
-  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  createDate?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   likes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Like']>>>, ParentType, ContextType>;
-  modifyDate?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  modifyDate?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   profile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType>;
-  profileId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  profileId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type ProfileResolvers<ContextType = any, ParentType extends ResolversParentTypes['Profile'] = ResolversParentTypes['Profile']> = {
-  birthday?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
-  firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  gender?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  location?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  occupation?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  birthday?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  gender?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  location?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  occupation?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   posts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Post']>>>, ParentType, ContextType>;
-  profileCompleted?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  profilePicture?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  profileCompleted?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  profilePicture?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

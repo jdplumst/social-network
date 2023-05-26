@@ -12,24 +12,24 @@ type Auth {
 }
 
 type Profile {
-  id: String!
-  firstName: String!
-  lastName: String!
-  location: String!
-  occupation: String!
-  gender: String!
-  birthday: Date!
-  profilePicture: String!
-  profileCompleted: Boolean!
+  id: String
+  firstName: String
+  lastName: String
+  location: String
+  occupation: String
+  gender: String
+  birthday: Date
+  profilePicture: String
+  profileCompleted: Boolean
   posts: [Post]
 }
 
 type Post {
-  id: String!
-  profileId: String!
-  description: String!
-  createDate: Date!
-  modifyDate: Date!
+  id: String
+  profileId: String
+  description: String
+  createDate: Date
+  modifyDate: Date
   profile: Profile
   comments: [Comment]
   likes: [Like]

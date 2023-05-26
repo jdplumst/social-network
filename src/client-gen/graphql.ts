@@ -114,27 +114,27 @@ export type MutationUpdateProfileArgs = {
 export type Post = {
   __typename?: 'Post';
   comments?: Maybe<Array<Maybe<Comment>>>;
-  createDate: Scalars['Date'];
-  description: Scalars['String'];
-  id: Scalars['String'];
+  createDate?: Maybe<Scalars['Date']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   likes?: Maybe<Array<Maybe<Like>>>;
-  modifyDate: Scalars['Date'];
+  modifyDate?: Maybe<Scalars['Date']>;
   profile?: Maybe<Profile>;
-  profileId: Scalars['String'];
+  profileId?: Maybe<Scalars['String']>;
 };
 
 export type Profile = {
   __typename?: 'Profile';
-  birthday: Scalars['Date'];
-  firstName: Scalars['String'];
-  gender: Scalars['String'];
-  id: Scalars['String'];
-  lastName: Scalars['String'];
-  location: Scalars['String'];
-  occupation: Scalars['String'];
+  birthday?: Maybe<Scalars['Date']>;
+  firstName?: Maybe<Scalars['String']>;
+  gender?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  location?: Maybe<Scalars['String']>;
+  occupation?: Maybe<Scalars['String']>;
   posts?: Maybe<Array<Maybe<Post>>>;
-  profileCompleted: Scalars['Boolean'];
-  profilePicture: Scalars['String'];
+  profileCompleted?: Maybe<Scalars['Boolean']>;
+  profilePicture?: Maybe<Scalars['String']>;
 };
 
 export type Query = {
@@ -201,14 +201,14 @@ export type CreateProfileMutationVariables = Exact<{
 }>;
 
 
-export type CreateProfileMutation = { __typename?: 'Mutation', createProfile: { __typename?: 'Profile', firstName: string, lastName: string, location: string, occupation: string, gender: string, birthday: any } };
+export type CreateProfileMutation = { __typename?: 'Mutation', createProfile: { __typename?: 'Profile', firstName?: string | null, lastName?: string | null, location?: string | null, occupation?: string | null, gender?: string | null, birthday?: any | null } };
 
 export type CompleteProfileMutationVariables = Exact<{
   profilePicture: Scalars['String'];
 }>;
 
 
-export type CompleteProfileMutation = { __typename?: 'Mutation', completeProfile: { __typename?: 'Profile', id: string, firstName: string, lastName: string, location: string, occupation: string, gender: string, birthday: any, profilePicture: string, profileCompleted: boolean } };
+export type CompleteProfileMutation = { __typename?: 'Mutation', completeProfile: { __typename?: 'Profile', id?: string | null, firstName?: string | null, lastName?: string | null, location?: string | null, occupation?: string | null, gender?: string | null, birthday?: any | null, profilePicture?: string | null, profileCompleted?: boolean | null } };
 
 export type CreatePostMutationVariables = Exact<{
   profileId: Scalars['String'];
@@ -216,36 +216,36 @@ export type CreatePostMutationVariables = Exact<{
 }>;
 
 
-export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'Post', id: string, description: string, profileId: string, createDate: any, modifyDate: any } };
+export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'Post', id?: string | null, description?: string | null, profileId?: string | null, createDate?: any | null, modifyDate?: any | null } };
 
 export type GetUserProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetUserProfileQuery = { __typename?: 'Query', userProfile?: { __typename?: 'Profile', id: string, firstName: string, lastName: string, location: string, occupation: string, gender: string, birthday: any, profilePicture: string, profileCompleted: boolean } | null };
+export type GetUserProfileQuery = { __typename?: 'Query', userProfile?: { __typename?: 'Profile', id?: string | null, firstName?: string | null, lastName?: string | null, location?: string | null, occupation?: string | null, gender?: string | null, birthday?: any | null, profilePicture?: string | null, profileCompleted?: boolean | null } | null };
 
 export type GetProfileQueryVariables = Exact<{
   profileId: Scalars['String'];
 }>;
 
 
-export type GetProfileQuery = { __typename?: 'Query', profile?: { __typename?: 'Profile', id: string, firstName: string, lastName: string, location: string, occupation: string, gender: string, birthday: any, profilePicture: string, profileCompleted: boolean, posts?: Array<{ __typename?: 'Post', id: string, profileId: string, description: string, createDate: any, modifyDate: any } | null> | null } | null };
+export type GetProfileQuery = { __typename?: 'Query', profile?: { __typename?: 'Profile', id?: string | null, firstName?: string | null, lastName?: string | null, location?: string | null, occupation?: string | null, gender?: string | null, birthday?: any | null, profilePicture?: string | null, profileCompleted?: boolean | null, posts?: Array<{ __typename?: 'Post', id?: string | null, profileId?: string | null, description?: string | null, createDate?: any | null, modifyDate?: any | null } | null> | null } | null };
 
 export type GetProfilesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetProfilesQuery = { __typename?: 'Query', profiles?: Array<{ __typename?: 'Profile', id: string, firstName: string, lastName: string, location: string, occupation: string, gender: string, birthday: any, profilePicture: string, profileCompleted: boolean } | null> | null };
+export type GetProfilesQuery = { __typename?: 'Query', profiles?: Array<{ __typename?: 'Profile', id?: string | null, firstName?: string | null, lastName?: string | null, location?: string | null, occupation?: string | null, gender?: string | null, birthday?: any | null, profilePicture?: string | null, profileCompleted?: boolean | null } | null> | null };
 
 export type GetPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPostsQuery = { __typename?: 'Query', posts?: Array<{ __typename?: 'Post', id: string, profileId: string, description: string, createDate: any, modifyDate: any, profile?: { __typename?: 'Profile', firstName: string, lastName: string, location: string, occupation: string, gender: string, birthday: any, profilePicture: string } | null }> | null };
+export type GetPostsQuery = { __typename?: 'Query', posts?: Array<{ __typename?: 'Post', id?: string | null, profileId?: string | null, description?: string | null, createDate?: any | null, modifyDate?: any | null, profile?: { __typename?: 'Profile', firstName?: string | null, lastName?: string | null, location?: string | null, occupation?: string | null, gender?: string | null, birthday?: any | null, profilePicture?: string | null } | null }> | null };
 
 export type GetFollowingPostsQueryVariables = Exact<{
   profileId: Scalars['String'];
 }>;
 
 
-export type GetFollowingPostsQuery = { __typename?: 'Query', followingPosts?: Array<{ __typename?: 'Post', id: string, profileId: string, description: string, createDate: any, modifyDate: any, profile?: { __typename?: 'Profile', firstName: string, lastName: string, location: string, occupation: string, gender: string, birthday: any, profilePicture: string } | null }> | null };
+export type GetFollowingPostsQuery = { __typename?: 'Query', followingPosts?: Array<{ __typename?: 'Post', id?: string | null, profileId?: string | null, description?: string | null, createDate?: any | null, modifyDate?: any | null, profile?: { __typename?: 'Profile', firstName?: string | null, lastName?: string | null, location?: string | null, occupation?: string | null, gender?: string | null, birthday?: any | null, profilePicture?: string | null } | null }> | null };
 
 export type GetIsFollowingQueryVariables = Exact<{
   profileId: Scalars['String'];
