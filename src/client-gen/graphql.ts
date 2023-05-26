@@ -50,6 +50,7 @@ export type Mutation = {
   createFollow: Follow;
   createPost: Post;
   createProfile: Profile;
+  deleteFollow: Follow;
   login: Auth;
   logout?: Maybe<Auth>;
   signUp: Auth;
@@ -80,6 +81,11 @@ export type MutationCreateProfileArgs = {
   lastName: Scalars['String'];
   location: Scalars['String'];
   occupation: Scalars['String'];
+};
+
+
+export type MutationDeleteFollowArgs = {
+  profileId: Scalars['String'];
 };
 
 

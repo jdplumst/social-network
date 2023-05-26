@@ -50,6 +50,7 @@ export type Mutation = {
   createFollow: Follow;
   createPost: Post;
   createProfile: Profile;
+  deleteFollow: Follow;
   login: Auth;
   logout?: Maybe<Auth>;
   signUp: Auth;
@@ -80,6 +81,11 @@ export type MutationCreateProfileArgs = {
   lastName: Scalars['String'];
   location: Scalars['String'];
   occupation: Scalars['String'];
+};
+
+
+export type MutationDeleteFollowArgs = {
+  profileId: Scalars['String'];
 };
 
 
@@ -303,6 +309,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createFollow?: Resolver<ResolversTypes['Follow'], ParentType, ContextType, RequireFields<MutationCreateFollowArgs, 'profileId'>>;
   createPost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationCreatePostArgs, 'description' | 'profileId'>>;
   createProfile?: Resolver<ResolversTypes['Profile'], ParentType, ContextType, RequireFields<MutationCreateProfileArgs, 'birthday' | 'firstName' | 'gender' | 'lastName' | 'location' | 'occupation'>>;
+  deleteFollow?: Resolver<ResolversTypes['Follow'], ParentType, ContextType, RequireFields<MutationDeleteFollowArgs, 'profileId'>>;
   login?: Resolver<ResolversTypes['Auth'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;
   logout?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType>;
   signUp?: Resolver<ResolversTypes['Auth'], ParentType, ContextType, RequireFields<MutationSignUpArgs, 'email' | 'password'>>;

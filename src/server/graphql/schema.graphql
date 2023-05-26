@@ -88,4 +88,5 @@ type Mutation {
   ): Profile!
   createPost(profileId: String!, description: String!): Post!
   createFollow(profileId: String!): Follow!
+  deleteFollow(profileId: String!): Follow!
 }
