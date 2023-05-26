@@ -24,6 +24,7 @@ const documents = {
     "\n  query getProfiles {\n    profiles {\n      id\n      firstName\n      lastName\n      location\n      occupation\n      gender\n      birthday\n      profilePicture\n      profileCompleted\n    }\n  }\n": types.GetProfilesDocument,
     "\n  query getPosts {\n    posts {\n      id\n      profileId\n      description\n      createDate\n      modifyDate\n      profile {\n        firstName\n        lastName\n        location\n        occupation\n        gender\n        birthday\n        profilePicture\n      }\n    }\n  }\n": types.GetPostsDocument,
     "\n  query getFollowingPosts($profileId: String!) {\n    followingPosts(profileId: $profileId) {\n      id\n      profileId\n      description\n      createDate\n      modifyDate\n      profile {\n        firstName\n        lastName\n        location\n        occupation\n        gender\n        birthday\n        profilePicture\n      }\n    }\n  }\n": types.GetFollowingPostsDocument,
+    "\n  query getIsFollowing($profileId: String!, $followerId: String!) {\n    isFollowing(profileId: $profileId, followerId: $followerId)\n  }\n": types.GetIsFollowingDocument,
 };
 
 /**
@@ -84,6 +85,10 @@ export function gql(source: "\n  query getPosts {\n    posts {\n      id\n      
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query getFollowingPosts($profileId: String!) {\n    followingPosts(profileId: $profileId) {\n      id\n      profileId\n      description\n      createDate\n      modifyDate\n      profile {\n        firstName\n        lastName\n        location\n        occupation\n        gender\n        birthday\n        profilePicture\n      }\n    }\n  }\n"): (typeof documents)["\n  query getFollowingPosts($profileId: String!) {\n    followingPosts(profileId: $profileId) {\n      id\n      profileId\n      description\n      createDate\n      modifyDate\n      profile {\n        firstName\n        lastName\n        location\n        occupation\n        gender\n        birthday\n        profilePicture\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query getIsFollowing($profileId: String!, $followerId: String!) {\n    isFollowing(profileId: $profileId, followerId: $followerId)\n  }\n"): (typeof documents)["\n  query getIsFollowing($profileId: String!, $followerId: String!) {\n    isFollowing(profileId: $profileId, followerId: $followerId)\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

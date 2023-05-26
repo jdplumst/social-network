@@ -3,11 +3,13 @@ import { authResolvers } from "./resolvers/auth";
 import { postResolvers } from "./resolvers/post";
 import { profileResolvers } from "./resolvers/profile";
 import { Context } from "@apollo/client";
+import { followResolvers } from "./resolvers/follow";
 
 export const resolvers: Resolvers = {
   Query: {
     ...profileResolvers.Query,
-    ...postResolvers.Query
+    ...postResolvers.Query,
+    ...followResolvers.Query
   },
   Mutation: {
     ...authResolvers,

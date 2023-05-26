@@ -61,6 +61,7 @@ type Query {
   profiles: [Profile]
   posts: [Post!]
   followingPosts(profileId: String!): [Post!]
+  isFollowing(profileId: String!, followerId: String!): Boolean
 }
 
 type Mutation {

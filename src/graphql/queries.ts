@@ -96,3 +96,9 @@ gql`
     }
   }
 `;
+
+gql`
+  query getIsFollowing($profileId: String!, $followerId: String!) {
+    isFollowing(profileId: $profileId, followerId: $followerId)
+  }
+`;

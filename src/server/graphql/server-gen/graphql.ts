@@ -128,6 +128,7 @@ export type Profile = {
 export type Query = {
   __typename?: 'Query';
   followingPosts?: Maybe<Array<Post>>;
+  isFollowing?: Maybe<Scalars['Boolean']>;
   posts?: Maybe<Array<Post>>;
   profile?: Maybe<Profile>;
   profiles?: Maybe<Array<Maybe<Profile>>>;
@@ -136,6 +137,12 @@ export type Query = {
 
 
 export type QueryFollowingPostsArgs = {
+  profileId: Scalars['String'];
+};
+
+
+export type QueryIsFollowingArgs = {
+  followerId: Scalars['String'];
   profileId: Scalars['String'];
 };
 
@@ -323,6 +330,7 @@ export type ProfileResolvers<ContextType = any, ParentType extends ResolversPare
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   followingPosts?: Resolver<Maybe<Array<ResolversTypes['Post']>>, ParentType, ContextType, RequireFields<QueryFollowingPostsArgs, 'profileId'>>;
+  isFollowing?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QueryIsFollowingArgs, 'followerId' | 'profileId'>>;
   posts?: Resolver<Maybe<Array<ResolversTypes['Post']>>, ParentType, ContextType>;
   profile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType, RequireFields<QueryProfileArgs, 'profileId'>>;
   profiles?: Resolver<Maybe<Array<Maybe<ResolversTypes['Profile']>>>, ParentType, ContextType>;
