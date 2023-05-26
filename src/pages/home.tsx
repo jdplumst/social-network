@@ -11,11 +11,7 @@ import { gql } from "@/client-gen";
 import { Post, Profile } from "@/client-gen/graphql";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import LoadingPage from "@/components/LoadingPage";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import Link from "next/link";
-
-dayjs.extend(relativeTime);
+import PostComponent from "@/components/PostComponent";
 
 const GET_USER_PROFILE = gql(`
   query getUserProfile {
@@ -240,34 +236,7 @@ export default function Home() {
                 <LoadingSpinner />
               ) : (
                 posts!.map((p) => (
-                  <div
-                    key={p.id}
-                    className="border-color mx-auto w-full overflow-auto border-2 p-4">
-                    <div className="flex items-center gap-4 pb-2">
-                      <img
-                        src={p.profile!.profilePicture!}
-                        alt={
-                          p.profile!.firstName +
-                          ` ` +
-                          p.profile!.lastName +
-                          `\'s profile picture`
-                        }
-                        className="inline h-14 w-14"
-                      />{" "}
-                      <div className="flex gap-2">
-                        <Link href={`/profile/${p.profileId}`}>
-                          <span className="text-2xl font-bold">
-                            {p.profile!.firstName} {p.profile!.lastName}
-                          </span>
-                        </Link>
-                        <span className="text-2xl">·</span>
-                        <span className="text-2xl">
-                          {dayjs(p.createDate).fromNow()}
-                        </span>
-                      </div>
-                    </div>
-                    <span className="text-xl">{p.description}</span>
-                  </div>
+                  <PostComponent key={p.id} post={p} profile={p.profile!} />
                 ))
               )}
             </div>

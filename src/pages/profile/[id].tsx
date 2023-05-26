@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import Link from "next/link";
+import PostComponent from "@/components/PostComponent";
 
 dayjs.extend(relativeTime);
 
@@ -111,65 +111,38 @@ export default function ProfilePage({
         {loadingProfile ? (
           <LoadingSpinner />
         ) : (
-          <div className="flex flex-col items-center">
+          <div className="flex w-full flex-col items-center">
             <div className="flex justify-center">
-              <img src={profile?.profilePicture!} className="h-64 w-64" />
+              <img src={profile!.profilePicture!} className="h-64 w-64" />
             </div>
             <div className="flex justify-center pb-4 text-3xl font-bold">
-              {profile?.firstName} {profile?.lastName}
+              {profile!.firstName} {profile!.lastName}
             </div>
-            <div className="border-color mx-auto mb-5 grid w-1/2 grid-cols-3 gap-x-10 gap-y-2 overflow-auto border-2 p-4">
-              <p>
-                <b>First Name:</b> {profile?.firstName}
+            <div className="border-color mx-auto mb-5 grid w-3/4 grid-cols-3 gap-x-10 gap-y-2 overflow-auto border-2 p-4">
+              <p className="text-xl">
+                <b>First Name:</b> {profile!.firstName}
               </p>
-              <p>
-                <b>Last Name:</b> {profile?.lastName}
+              <p className="text-xl">
+                <b>Last Name:</b> {profile!.lastName}
               </p>
-              <p>
-                <b>Location:</b> {profile?.location}
+              <p className="text-xl">
+                <b>Location:</b> {profile!.location}
               </p>
-              <p>
-                <b>Occupation:</b> {profile?.occupation}
+              <p className="text-xl">
+                <b>Occupation:</b> {profile!.occupation}
               </p>
-              <p>
-                <b>Gender:</b> {profile?.gender}
+              <p className="text-xl">
+                <b>Gender:</b> {profile!.gender}
               </p>
-              <p>
+              <p className="text-xl">
                 <b>Birthday:</b>{" "}
-                {dayjs(profile?.birthday).format("MMMM DD, YYYY")}
+                {dayjs(profile!.birthday).format("MMMM DD, YYYY")}
               </p>
             </div>
             <div className="flex w-1/2 justify-center">
-              <div className="grid grid-cols-1 justify-center gap-5">
+              <div className="grid w-screen grid-cols-1 justify-center gap-5">
                 {profile?.posts?.map((p) => (
-                  <div
-                    key={p.id}
-                    className="border-color mx-auto w-full overflow-auto border-2 p-4">
-                    <div className="flex items-center gap-4 pb-2">
-                      <img
-                        src={profile!.profilePicture!}
-                        alt={
-                          profile!.firstName +
-                          ` ` +
-                          profile!.lastName +
-                          `\'s profile picture`
-                        }
-                        className="inline h-14 w-14"
-                      />{" "}
-                      <div className="flex gap-2">
-                        <Link href={`/profile/${p.profileId}`}>
-                          <span className="text-2xl font-bold">
-                            {profile!.firstName} {profile!.lastName}
-                          </span>
-                        </Link>
-                        <span className="text-2xl">·</span>
-                        <span className="text-2xl">
-                          {dayjs(p.createDate).fromNow()}
-                        </span>
-                      </div>
-                    </div>
-                    <span className="text-xl">{p.description}</span>
-                  </div>
+                  <PostComponent key={p.id} post={p} profile={profile} />
                 ))}
               </div>
             </div>
