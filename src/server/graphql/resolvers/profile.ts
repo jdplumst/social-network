@@ -4,7 +4,7 @@ import {
   MutationUpdateProfileArgs,
   QueryProfileArgs
 } from "../server-gen/graphql";
-import { Context } from "@apollo/client";
+import { Context } from "../context";
 
 export const profileResolvers = {
   Query: {

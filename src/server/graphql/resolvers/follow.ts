@@ -1,4 +1,4 @@
-import { Context } from "@apollo/client";
+import { Context } from "../context";
 import {
   MutationCreateFollowArgs,
   QueryIsFollowingArgs
@@ -32,6 +32,9 @@ export const followResolvers = {
       const follower = await context.prisma.profile.findUnique({
         where: { userId: context.user.id }
       });
+      if (!follower) {
+        throw Error("Must have an existing profile to follow.");
+      }
       if (follower.id === args.profileId) {
         throw Error("Cannot follow yourself");
       }

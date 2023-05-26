@@ -1,4 +1,4 @@
-import { Context } from "@apollo/client";
+import { Context } from "../context";
 import bcrypt from "bcrypt";
 import validator from "validator";
 import jsonwebtoken from "jsonwebtoken";

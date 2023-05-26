@@ -3,7 +3,7 @@ import {
   Post,
   QueryFollowingPostsArgs
 } from "../server-gen/graphql";
-import { Context } from "@apollo/client";
+import { Context } from "../context";
 
 export const postResolvers = {
   Query: {
@@ -29,7 +29,7 @@ export const postResolvers = {
         where: { followerId: args.profileId },
         select: { profileId: true }
       });
-      const followees = f.map((f: Post) => f.profileId);
+      const followees = f.map((f) => f.profileId);
       const posts = await context.prisma.post.findMany({
         where: { profileId: { in: followees } },
         orderBy: { createDate: "desc" }
