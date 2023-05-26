@@ -87,4 +87,5 @@ type Mutation {
     profilePicture: String
   ): Profile!
   createPost(profileId: String!, description: String!): Post!
+  createFollow(profileId: String!): Follow!
 }

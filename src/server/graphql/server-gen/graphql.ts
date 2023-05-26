@@ -47,6 +47,7 @@ export type Like = {
 export type Mutation = {
   __typename?: 'Mutation';
   completeProfile: Profile;
+  createFollow: Follow;
   createPost: Post;
   createProfile: Profile;
   login: Auth;
@@ -58,6 +59,11 @@ export type Mutation = {
 
 export type MutationCompleteProfileArgs = {
   profilePicture: Scalars['String'];
+};
+
+
+export type MutationCreateFollowArgs = {
+  profileId: Scalars['String'];
 };
 
 
@@ -294,6 +300,7 @@ export type LikeResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   completeProfile?: Resolver<ResolversTypes['Profile'], ParentType, ContextType, RequireFields<MutationCompleteProfileArgs, 'profilePicture'>>;
+  createFollow?: Resolver<ResolversTypes['Follow'], ParentType, ContextType, RequireFields<MutationCreateFollowArgs, 'profileId'>>;
   createPost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationCreatePostArgs, 'description' | 'profileId'>>;
   createProfile?: Resolver<ResolversTypes['Profile'], ParentType, ContextType, RequireFields<MutationCreateProfileArgs, 'birthday' | 'firstName' | 'gender' | 'lastName' | 'location' | 'occupation'>>;
   login?: Resolver<ResolversTypes['Auth'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;

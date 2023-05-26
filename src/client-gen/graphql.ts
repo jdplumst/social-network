@@ -47,6 +47,7 @@ export type Like = {
 export type Mutation = {
   __typename?: 'Mutation';
   completeProfile: Profile;
+  createFollow: Follow;
   createPost: Post;
   createProfile: Profile;
   login: Auth;
@@ -58,6 +59,11 @@ export type Mutation = {
 
 export type MutationCompleteProfileArgs = {
   profilePicture: Scalars['String'];
+};
+
+
+export type MutationCreateFollowArgs = {
+  profileId: Scalars['String'];
 };
 
 

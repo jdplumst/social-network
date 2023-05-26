@@ -14,7 +14,8 @@ export const resolvers: Resolvers = {
   Mutation: {
     ...authResolvers,
     ...profileResolvers.Mutation,
-    ...postResolvers.Mutation
+    ...postResolvers.Mutation,
+    ...followResolvers.Mutation
   },
   Post: {
     profile: async (parent: Post, _args: any, context: Context) => {
