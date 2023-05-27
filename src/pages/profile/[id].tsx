@@ -2,7 +2,7 @@ import { gql } from "@/client-gen";
 import { Profile } from "@/client-gen/graphql";
 import LoadingPage from "@/components/LoadingPage";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -52,6 +52,30 @@ const GET_USER_PROFILE = gql(`
   }
 `);
 
+const GET_IS_FOLLOWING = gql(`
+  query getIsFollowing($profileId: String!, $followerId: String!) {
+    isFollowing(profileId: $profileId, followerId: $followerId)
+  }
+`);
+
+const CREATE_FOLLOW = gql(`
+  mutation createFollow($profileId: String!) {
+    createFollow(profileId: $profileId) {
+      profileId
+      followerId
+    }
+  }
+`);
+
+const DELETE_FOLLOW = gql(`
+  mutation deleteFollow($profileId: String!) {
+    deleteFollow(profileId: $profileId) {
+      profileId
+      followerId
+    }
+  }
+`);
+
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const id = context.params!.id;
   return { props: { id: id } };
@@ -95,6 +119,27 @@ export default function ProfilePage({
     }
   });
 
+  const [following, setFollowing] = useState(false);
+  const { loading: loadingFollowing } = useQuery(GET_IS_FOLLOWING, {
+    variables: { profileId: profile?.id!, followerId: userProfile?.id! },
+    onCompleted(data) {
+      setFollowing(data.isFollowing!);
+    }
+  });
+
+  const [createFollow] = useMutation(CREATE_FOLLOW);
+  const [deleteFollow] = useMutation(DELETE_FOLLOW);
+
+  const handleCreateFollow = () => {
+    createFollow({ variables: { profileId: profile?.id! } });
+    setFollowing(true);
+  };
+
+  const handleDeleteFollow = () => {
+    deleteFollow({ variables: { profileId: profile?.id! } });
+    setFollowing(false);
+  };
+
   if (load) return <LoadingPage />;
 
   return (
@@ -115,8 +160,23 @@ export default function ProfilePage({
             <div className="flex justify-center">
               <img src={profile!.profilePicture!} className="h-64 w-64" />
             </div>
-            <div className="flex justify-center pb-4 text-3xl font-bold">
-              {profile!.firstName} {profile!.lastName}
+            <div className="flex items-center justify-center gap-5 py-4 text-3xl font-bold">
+              {profile!.firstName} {profile!.lastName}{" "}
+              {following && userProfile?.id !== profile?.id ? (
+                <button
+                  onClick={() => handleDeleteFollow()}
+                  className="border-color rounded-lg border-2 bg-slate-500 p-4 text-xl font-bold text-white hover:cursor-pointer hover:bg-slate-600">
+                  {loadingFollowing ? <LoadingSpinner /> : `Unfollow`}
+                </button>
+              ) : !following && userProfile?.id !== profile?.id ? (
+                <button
+                  onClick={() => handleCreateFollow()}
+                  className="rounded-lg bg-purple-600 p-4 text-xl font-bold text-white hover:cursor-pointer hover:bg-purple-700">
+                  {loadingFollowing ? <LoadingSpinner /> : `Follow`}
+                </button>
+              ) : (
+                <></>
+              )}
             </div>
             <div className="border-color mx-auto mb-5 grid w-3/4 grid-cols-3 gap-x-10 gap-y-2 overflow-auto border-2 p-4">
               <p className="text-xl">

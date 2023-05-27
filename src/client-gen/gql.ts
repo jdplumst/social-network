@@ -19,6 +19,8 @@ const documents = {
     "\n  mutation createProfile(\n    $firstName: String!\n    $lastName: String!\n    $location: String!\n    $occupation: String!\n    $gender: String!\n    $birthday: Date!\n  ) {\n    createProfile(\n      firstName: $firstName\n      lastName: $lastName\n      location: $location\n      occupation: $occupation\n      gender: $gender\n      birthday: $birthday\n    ) {\n      firstName\n      lastName\n      location\n      occupation\n      gender\n      birthday\n    }\n  }\n": types.CreateProfileDocument,
     "\n  mutation completeProfile($profilePicture: String!) {\n    completeProfile(profilePicture: $profilePicture) {\n      id\n      firstName\n      lastName\n      location\n      occupation\n      gender\n      birthday\n      profilePicture\n      profileCompleted\n    }\n  }\n": types.CompleteProfileDocument,
     "\n  mutation createPost($profileId: String!, $description: String!) {\n    createPost(profileId: $profileId, description: $description) {\n      id\n      description\n      profileId\n      createDate\n      modifyDate\n    }\n  }\n": types.CreatePostDocument,
+    "\n  mutation createFollow($profileId: String!) {\n    createFollow(profileId: $profileId) {\n      profileId\n      followerId\n    }\n  }\n": types.CreateFollowDocument,
+    "\n  mutation deleteFollow($profileId: String!) {\n    deleteFollow(profileId: $profileId) {\n      profileId\n      followerId\n    }\n  }\n": types.DeleteFollowDocument,
     "\n  query getUserProfile {\n    userProfile {\n      id\n      firstName\n      lastName\n      location\n      occupation\n      gender\n      birthday\n      profilePicture\n      profileCompleted\n    }\n  }\n": types.GetUserProfileDocument,
     "\n  query getProfile($profileId: String!) {\n    profile(profileId: $profileId) {\n      id\n      firstName\n      lastName\n      location\n      occupation\n      gender\n      birthday\n      profilePicture\n      profileCompleted\n      posts {\n        id\n        profileId\n        description\n        createDate\n        modifyDate\n      }\n    }\n  }\n": types.GetProfileDocument,
     "\n  query getProfiles {\n    profiles {\n      id\n      firstName\n      lastName\n      location\n      occupation\n      gender\n      birthday\n      profilePicture\n      profileCompleted\n    }\n  }\n": types.GetProfilesDocument,
@@ -65,6 +67,14 @@ export function gql(source: "\n  mutation completeProfile($profilePicture: Strin
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation createPost($profileId: String!, $description: String!) {\n    createPost(profileId: $profileId, description: $description) {\n      id\n      description\n      profileId\n      createDate\n      modifyDate\n    }\n  }\n"): (typeof documents)["\n  mutation createPost($profileId: String!, $description: String!) {\n    createPost(profileId: $profileId, description: $description) {\n      id\n      description\n      profileId\n      createDate\n      modifyDate\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation createFollow($profileId: String!) {\n    createFollow(profileId: $profileId) {\n      profileId\n      followerId\n    }\n  }\n"): (typeof documents)["\n  mutation createFollow($profileId: String!) {\n    createFollow(profileId: $profileId) {\n      profileId\n      followerId\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation deleteFollow($profileId: String!) {\n    deleteFollow(profileId: $profileId) {\n      profileId\n      followerId\n    }\n  }\n"): (typeof documents)["\n  mutation deleteFollow($profileId: String!) {\n    deleteFollow(profileId: $profileId) {\n      profileId\n      followerId\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

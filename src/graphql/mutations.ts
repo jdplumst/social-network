@@ -81,3 +81,21 @@ gql`
     }
   }
 `;
+
+gql`
+  mutation createFollow($profileId: String!) {
+    createFollow(profileId: $profileId) {
+      profileId
+      followerId
+    }
+  }
+`;
+
+gql`
+  mutation deleteFollow($profileId: String!) {
+    deleteFollow(profileId: $profileId) {
+      profileId
+      followerId
+    }
+  }
+`;
